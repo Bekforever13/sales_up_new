@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ISourceInitState, TSource } from './Sources.types'
+import { createSlice,  } from '@reduxjs/toolkit'
+import { ISourceInitState,  } from './Sources.types'
 
 const initialState: ISourceInitState = {
 	sources: [],

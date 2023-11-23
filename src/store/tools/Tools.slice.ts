@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IToolsInitState, TTool } from './Tools.type'
+import { createSlice } from '@reduxjs/toolkit'
+import { IToolsInitState } from './Tools.type'
 
 const initialState: IToolsInitState = {
 	tools: [],
@@ -8,9 +8,7 @@ const initialState: IToolsInitState = {
 const ToolsSlice = createSlice({
 	name: 'ToolsSlice',
 	initialState,
-	reducers: {
-		
-	},
+	reducers: {},
 })
 
 export const { reducer, actions } = ToolsSlice

@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ICoursesInitState, TCourse } from './Courses.type'
+import { createSlice,  } from '@reduxjs/toolkit'
+import { ICoursesInitState,  } from './Courses.type'
 
 const initialState: ICoursesInitState = {
 	courses: [],
