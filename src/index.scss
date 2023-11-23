@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Montserrat', sans-serif;
+	@apply text-black dark:text-white;
+}
+
+.app {
+	background-color: var(--clr-bg);
+
+	&.light {
+		--clr-bg: #fff;
+		--clr-text: #000;
+	}
+
+	&.dark {
+		--clr-bg: #000;
+		--clr-text: #fff;
+	}
+}
+
+.ant-btn-primary * {
+	color: #fff !important;
+}
