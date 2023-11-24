@@ -9,4 +9,5 @@ export type TTool = {
 
 export interface IToolsInitState {
 	tools: TTool[]
+	toolsTotal: number
 }

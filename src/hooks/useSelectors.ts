@@ -6,7 +6,6 @@ const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 export const useSelectors = () => {
 	const { auth } = useAppSelector(s => s)
 	const { courses } = useAppSelector(s => s)
-	const { home } = useAppSelector(s => s)
 	const { leads } = useAppSelector(s => s)
 	const { orders } = useAppSelector(s => s)
 	const { settings } = useAppSelector(s => s)
@@ -17,7 +16,6 @@ export const useSelectors = () => {
 	return {
 		...auth,
 		...courses,
-		...home,
 		...leads,
 		...orders,
 		...settings,

@@ -6,4 +6,6 @@ export type TSource = {
 
 export interface ISourceInitState {
 	sources: TSource[]
+	sourcesTotal: number
+	sourceToEdit: TSource | null
 }

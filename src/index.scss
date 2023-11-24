@@ -10,6 +10,11 @@
 	@apply text-black dark:text-white;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
 .app {
 	background-color: var(--clr-bg);
 

@@ -1,46 +1,41 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { UiButton } from 'src/components/ui'
-import UiTable from 'src/components/ui/table/UiTable'
-// import type { ColumnsType } from 'antd/es/table'
+import { CoursesTable } from './table/CoursesTable'
+import { useActions, useSelectors } from 'src/hooks'
+import { axiosInstance } from 'src/services/axiosInstance'
+import { Spin } from 'antd'
+import { AddCourseDrawer } from './addCourseDrawer/AddCourseDrawer'
 
 const Courses: React.FC = () => {
-	// const columns: ColumnsType<any> = [
-	// 	{
-	// 		title: 'Название курса',
-	// 		dataIndex: 'title',
-	// 	},
-	// 	{
-	// 		title: 'Описание',
-	// 		dataIndex: 'description',
-	// 	},
+	const [loading, setLoading] = useState(false)
+	const [open, setOpen] = useState(false)
+	const [page, setPage] = useState(1)
+	const { fetch } = useSelectors()
 
-	// 	{
-	// 		title: 'Цена',
-	// 		dataIndex: 'price',
-	// 	},
-	// 	{
-	// 		title: 'Кликнул',
-	// 		dataIndex: 'clicked',
-	// 	},
-	// 	{
-	// 		title: 'Действия',
-	// 		dataIndex: 'comment',
-	// 	},
-	// 	{
-	// 		title: 'Действия',
-	// 		dataIndex: 'actions',
-	// 		render: (_, ) => <div className='flex items-center gap-2'>
-	// 			edit
-	// 			delete
-	// 		</div>,
-	// 	},
-	// ]
+	const { setCourses, setCoursesTotal } = useActions()
+
+	const showDrawer = () => setOpen(true)
+
+	useEffect(() => {
+		setLoading(true)
+		axiosInstance
+			.get(`/courses?page=${page}`)
+			.then(res => {
+				setCourses(res.data.data)
+				setCoursesTotal(res.data.total)
+			})
+			.finally(() => setLoading(false))
+	}, [fetch])
+
 	return (
 		<div className='text-black dark:text-white bg-[#ececec] dark:bg-slate-600 p-5 rounded-xl flex flex-col gap-y-5'>
 			<div className='w-fit'>
-				<UiButton>Добавить</UiButton>
+				<UiButton onClick={showDrawer}>Добавить</UiButton>
+				<AddCourseDrawer open={open} setOpen={setOpen} />
 			</div>
-			<UiTable />
+			<Spin spinning={loading}>
+				<CoursesTable page={page} setPage={setPage} />
+			</Spin>
 		</div>
 	)
 }

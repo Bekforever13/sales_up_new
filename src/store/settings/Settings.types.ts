@@ -1,5 +1,5 @@
 export type TSettingStatus = {
-	id: number
+	id: string
 	name: string
 }
 
@@ -14,5 +14,5 @@ export type TSettingBot = {
 
 export interface ISettingInitState {
 	statuses: TSettingStatus[]
-	bots: TSettingBot[]
+	bot: TSettingBot | null
 }

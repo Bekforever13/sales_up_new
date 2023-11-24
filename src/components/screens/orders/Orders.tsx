@@ -9,7 +9,7 @@ import { useSelectors } from 'src/hooks'
 
 const Orders: React.FC = () => {
 	const [loading, setLoading] = useState(false)
-	const [page, setPage] = useState(0)
+	const [page, setPage] = useState(1)
 	const [courseId, setCourseId] = useState('')
 	const [leadId, setLeadId] = useState('')
 	const debouncedCourseId = useDebounce(courseId, 500)

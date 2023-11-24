@@ -9,4 +9,6 @@ export type TCourse = {
 
 export interface ICoursesInitState {
 	courses: TCourse[]
+	coursesTotal: number
+	courseToEdit: TCourse | null
 }

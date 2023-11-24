@@ -18,7 +18,7 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 	const handleChangePage = (event: number) => setPage(event)
 
 	useEffect(() => {
-		statuses.map(status => {
+		statuses.map((status: any) => {
 			setStatusOptions(prev => [
 				...prev,
 				{ value: status.id, label: status.name },

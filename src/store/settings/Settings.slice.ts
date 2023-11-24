@@ -6,7 +6,7 @@ import {
 } from './Settings.types'
 
 const initialState: ISettingInitState = {
-	bots: [],
+	bot: null,
 	statuses: [],
 }
 
@@ -14,19 +14,16 @@ const SettingsSlice = createSlice({
 	name: 'SettingsSlice',
 	initialState,
 	reducers: {
-		setBots: (state, { payload }: PayloadAction<TSettingBot[]>) => {
-			state.bots = payload
+		setBots: (state, { payload }: PayloadAction<TSettingBot>) => {
+			state.bot = payload
 		},
 		removeBot: state => {
-			state.bots = []
-		},
-		addBot: (state, { payload }: PayloadAction<TSettingBot>) => {
-			state.bots.push(payload)
+			state.bot = null
 		},
 		setStatuses: (state, { payload }: PayloadAction<TSettingStatus[]>) => {
 			state.statuses = payload
 		},
-		removeStatus: (state, { payload }: PayloadAction<number>) => {
+		removeStatus: (state, { payload }: PayloadAction<string>) => {
 			state.statuses = state.statuses.filter(status => status.id !== payload)
 		},
 	},
