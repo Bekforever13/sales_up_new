@@ -1,6 +1,6 @@
+import { notification } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { UiButton, UiDrawer, UiInput, UiSelect } from 'src/components/ui'
-import { useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 
 type TProps = {
@@ -9,7 +9,6 @@ type TProps = {
 }
 
 const AddTool: React.FC<TProps> = ({ open, setOpen }) => {
-	const { tools } = useSelectors()
 	const [options, setOptions] = useState<{ value: number; label: string }[]>([])
 	const [newTool, setNewTool] = useState<{
 		source_id: string | null
@@ -20,19 +19,28 @@ const AddTool: React.FC<TProps> = ({ open, setOpen }) => {
 	})
 
 	useEffect(() => {
-		tools.map(item => {
-			setOptions(prev => [
-				...prev,
-				{
-					value: item.source_id,
-					label: item.source_name,
-				},
-			])
+		axiosInstance.get('/sources').then(res => {
+			res.data.data.map((item: any) => {
+				setOptions(prev => [
+					...prev,
+					{
+						value: item.id,
+						label: item.name,
+					},
+				])
+			})
 		})
-	}, [tools])
+	}, [])
 
 	const onSubmit = () => {
-		axiosInstance.post('/links', newTool)
+		axiosInstance.post('/links', newTool).then(() => {
+			notification.success({
+				message: 'Успешно ✅',
+				style: { color: 'Green', width: '200px' },
+				placement: 'top',
+			})
+			setOpen(false)
+		})
 	}
 
 	const onClose = () => setOpen(false)
