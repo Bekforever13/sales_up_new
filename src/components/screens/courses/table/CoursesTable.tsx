@@ -25,10 +25,6 @@ const CoursesTable: React.FC<TCoursesProps> = ({ page, setPage }) => {
 			dataIndex: 'description',
 		},
 		{
-			title: 'Цена',
-			dataIndex: 'price',
-		},
-		{
 			title: 'Кликнул',
 			dataIndex: 'clicked',
 		},

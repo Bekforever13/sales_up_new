@@ -6,8 +6,10 @@ import { ILoginDataBody } from './Auth.types'
 import { useActions } from 'src/hooks/useActions'
 import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from 'src/services/axiosInstance'
+import { FaEyeSlash, FaEye } from 'react-icons/fa'
 
 const Auth: React.FC = () => {
+	const [showPassword, setShowPassword] = React.useState(false)
 	const [isButtonDisabled, setButtonDisabled] = React.useState(false)
 	const { setAuth } = useActions()
 	const navigate = useNavigate()
@@ -31,7 +33,7 @@ const Auth: React.FC = () => {
 			})
 			.then(res => {
 				setAuth(true)
-				localStorage.setItem('token', 'Bearer ' + res.data.data.token)
+				localStorage.setItem('token', 'Bearer ' + res.data.data.access_token)
 			})
 			.catch(e => console.log(e.response))
 			.finally(() => navigate('/'))
@@ -39,7 +41,7 @@ const Auth: React.FC = () => {
 
 	React.useEffect(() => {
 		if (token) {
-			axiosInstance.post('/auth/check').then(() => {
+			axiosInstance.get('/auth/user').then(() => {
 				setAuth(true)
 				navigate('/', { replace: true })
 			})
@@ -82,12 +84,21 @@ const Auth: React.FC = () => {
 						/>
 					)}
 				/>
-				<input
-					className='w-full px-4 py-[7px] rounded-md border outline-none'
-					type='password'
-					{...register('password', { required: true })}
-					placeholder='Пароль'
-				/>
+				<div className='w-full relative'>
+					<input
+						className='w-full px-4 py-[7px] rounded-md border outline-none'
+						type={showPassword ? 'text' : 'password'}
+						{...register('password', { required: true })}
+						placeholder='Пароль'
+					/>
+					<div className='absolute top-2 right-3'>
+						{showPassword ? (
+							<FaEyeSlash onClick={() => setShowPassword(false)} />
+						) : (
+							<FaEye onClick={() => setShowPassword(true)} />
+						)}
+					</div>
+				</div>
 				<button
 					className='w-full px-4 py-2 h-fit text-lg text-white font-medium'
 					style={{ backgroundColor: '#1976D2' }}

@@ -6,7 +6,7 @@ import { axiosInstance } from 'src/services/axiosInstance'
 
 const AdminLayout: React.FC = () => {
 	React.useEffect(() => {
-		axiosInstance.post('/auth/check')
+		axiosInstance.get('/auth/user')
 	}, [])
 
 	return (
