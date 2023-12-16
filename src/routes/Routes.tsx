@@ -4,6 +4,7 @@ import {
 	Courses,
 	Leads,
 	Companies,
+	Users,
 } from 'src/components/screens'
 
 export const routes = [
@@ -12,4 +13,5 @@ export const routes = [
 	{ path: '/companies', element: <Companies /> },
 	{ path: '/courses', element: <Courses /> },
 	{ path: '/sources', element: <Sources /> },
+	{ path: '/users', element: <Users /> },
 ]

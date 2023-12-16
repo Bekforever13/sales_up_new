@@ -57,6 +57,7 @@ const CoursesTable: React.FC<TCoursesProps> = ({ page, setPage }) => {
 					onChange: e => setPage(e),
 				}}
 				rowKey={e => e.id}
+				scroll={{ x: true }}
 				size='small'
 				bordered
 			/>

@@ -10,8 +10,8 @@ const initialState: ISharedInitState<any> = {
 	fetch: 0,
 }
 
-const SettingsSlice = createSlice({
-	name: 'SettingsSlice',
+const SharedSlice = createSlice({
+	name: 'SharedSlice',
 	initialState: initialState,
 	reducers: {
 		setUser<T>(state: ISharedInitState<T>, { payload }: PayloadAction<T>) {
@@ -27,10 +27,10 @@ const SettingsSlice = createSlice({
 				localStorage.setItem('theme', (state.mode = 'dark'))
 			}
 		},
-		fetch(state, { payload }: PayloadAction<number>) {
+		setFetch(state, { payload }: PayloadAction<number>) {
 			state.fetch = payload
 		},
 	},
 })
 
-export const { reducer, actions } = SettingsSlice
+export const { reducer, actions } = SharedSlice

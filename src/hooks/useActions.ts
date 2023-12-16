@@ -4,21 +4,19 @@ import { useDispatch } from 'react-redux'
 import { actions as auth } from 'src/store/auth/Auth.slice'
 import { actions as courses } from 'src/store/courses/Courses.slice'
 import { actions as leads } from 'src/store/leads/Leads.slice'
-import { actions as orders } from 'src/store/orders/Orders.slice'
-import { actions as settings } from 'src/store/settings/Settings.slice'
 import { actions as sources } from 'src/store/sources/Sources.slice'
-import { actions as tools } from 'src/store/tools/Tools.slice'
 import { actions as shared } from 'src/store/shared/Shared.slice'
+import { actions as companies } from 'src/store/companies/Companies.slice'
+import { actions as users } from 'src/store/users/Users.slice'
 
 const rootActions = {
 	...auth,
 	...courses,
 	...sources,
 	...leads,
-	...orders,
-	...settings,
-	...tools,
 	...shared,
+	...companies,
+	...users,
 }
 
 export const useActions = () => {

@@ -7,7 +7,7 @@ import { useActions, useSelectors } from 'src/hooks'
 
 const EditSource: React.FC = () => {
 	const [open, setOpen] = useState(false)
-	const { fetch } = useActions()
+	const { setFetch } = useActions()
 	const { sourceToEdit } = useSelectors()
 	const [newDataSource, setNewDataSource] = useState({
 		name: sourceToEdit?.name,
@@ -27,7 +27,7 @@ const EditSource: React.FC = () => {
 	const onSubmit = () => {
 		const obj = { id: sourceToEdit?.id, ...newDataSource }
 		axiosInstance.put(`/sources/${sourceToEdit?.id}`, obj).then(() => {
-			fetch(Math.random())
+			setFetch(Math.random())
 			setOpen(false)
 		})
 	}

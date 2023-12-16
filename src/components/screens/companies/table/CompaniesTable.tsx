@@ -1,30 +1,39 @@
 import React from 'react'
 import { useSelectors } from 'src/hooks/useSelectors'
-import { TLeadsProps } from './LeadsTable.types'
-import { TLeads } from 'src/store/leads/Leads.types'
+import { TCompaniesProps } from './CompaniesTable.types'
 import type { ColumnsType } from 'antd/es/table'
 import UiTable from 'src/components/ui/table/UiTable'
 import { BsPencilSquare } from 'react-icons/bs'
 import { IoTrashOutline } from 'react-icons/io5'
+import { ICompany } from 'src/store/companies/Companies.types'
 import { UiButton } from 'src/components/ui'
 
-const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
-	const { leads, leadsTotal } = useSelectors()
+const CompaniesTable: React.FC<TCompaniesProps> = ({ page, setPage }) => {
+	const { companies, companiesTotal } = useSelectors()
 
 	const handleChangePage = (event: number) => setPage(event)
 
-	const columns: ColumnsType<TLeads> = [
+	const columns: ColumnsType<ICompany> = [
 		{
-			title: 'ФИО',
-			dataIndex: 'first_name',
+			title: 'Название',
+			dataIndex: 'title',
 		},
 		{
-			title: 'ФИО',
-			dataIndex: 'last_name',
+			title: 'Описание',
+			dataIndex: 'description',
+		},
+		{
+			title: 'Телеграм канал',
+			dataIndex: 'telegram_channel',
 		},
 		{
 			title: 'Телефон',
 			dataIndex: 'phone',
+		},
+		{
+			title: 'Телеграм бот',
+			dataIndex: 'telegram_bot',
+			render: (_, rec) => rec.telegraph_bot?.name,
 		},
 		{
 			title: 'Билеты',
@@ -51,16 +60,16 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 		<>
 			<UiTable
 				columns={columns}
-				dataSource={leads}
+				dataSource={companies}
 				pagination={{
-					total: leadsTotal,
+					total: companiesTotal,
 					current: page,
 					showSizeChanger: false,
 					defaultPageSize: 10,
 					onChange: handleChangePage,
 				}}
-				rowKey={e => e.id}
 				scroll={{ x: true }}
+				rowKey={e => e.id}
 				size='small'
 				bordered
 			/>
@@ -68,4 +77,4 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 	)
 }
 
-export { LeadsTable }
+export { CompaniesTable }

@@ -9,7 +9,7 @@ type TProps = {
 }
 
 const AddCourseDrawer: React.FC<TProps> = ({ setOpen, open }) => {
-	const { fetch } = useActions()
+	const { setFetch } = useActions()
 	const [newCourse, setNewСourse] = useState({
 		title: '',
 		description: '',
@@ -26,7 +26,7 @@ const AddCourseDrawer: React.FC<TProps> = ({ setOpen, open }) => {
 				description: '',
 				price: '',
 			})
-			fetch(Math.random())
+			setFetch(Math.random())
 		})
 	}
 

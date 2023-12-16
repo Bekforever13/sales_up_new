@@ -4,10 +4,9 @@ import { FaTelegramPlane } from 'react-icons/fa'
 import { axiosInstance } from 'src/services/axiosInstance'
 import { TLeads } from 'src/store/leads/Leads.types'
 import { UiButton } from 'src/components/ui'
-import { TOrder } from 'src/store/orders/Orders.types'
 
 type TProps = {
-	user: TLeads | TOrder
+	user: TLeads
 }
 
 const Telegram: React.FC<TProps> = ({ user }) => {

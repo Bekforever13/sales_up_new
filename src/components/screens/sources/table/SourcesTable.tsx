@@ -19,11 +19,7 @@ const SourcesTable: React.FC<TCoursesProps> = ({ page, setPage }) => {
 	const columns: ColumnsType<TSource> = [
 		{
 			title: 'Название',
-			dataIndex: 'name',
-		},
-		{
-			title: 'Тип',
-			dataIndex: 'type',
+			dataIndex: 'title',
 		},
 		{
 			title: 'Действия',
@@ -54,6 +50,7 @@ const SourcesTable: React.FC<TCoursesProps> = ({ page, setPage }) => {
 				onChange: e => setPage(e),
 			}}
 			rowKey={e => e.id}
+			scroll={{ x: true }}
 			size='small'
 			bordered
 		/>

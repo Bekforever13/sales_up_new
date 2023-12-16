@@ -9,7 +9,7 @@ type TProps = {
 }
 
 const AddSourceDrawer: React.FC<TProps> = ({ open, setOpen }) => {
-	const { fetch } = useActions()
+	const { setFetch } = useActions()
 	const options = [
 		{ value: 'Telegram Bot', label: 'Telegram Bot' },
 		{ value: 'Web', label: 'Web' },
@@ -26,7 +26,7 @@ const AddSourceDrawer: React.FC<TProps> = ({ open, setOpen }) => {
 	const onSubmit = () => {
 		axiosInstance.post('/sources', newSource).finally(() => {
 			setOpen(false)
-			fetch(Math.random())
+			setFetch(Math.random())
 			setNewSource({
 				name: '',
 				type: '',

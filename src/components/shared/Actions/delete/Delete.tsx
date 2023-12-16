@@ -10,11 +10,11 @@ type TProps = {
 }
 
 const Delete: React.FC<TProps> = ({ route, id }) => {
-	const { fetch } = useActions()
+	const { setFetch } = useActions()
 	
 	const handleDelete = () => {
 		axiosInstance.delete(`/${route}/${id}`).then(() => {
-			fetch(Math.random())
+			setFetch(Math.random())
 		})
 	}
 	return (

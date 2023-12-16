@@ -6,7 +6,7 @@ export type TBot = {
 	token: string
 	updated_at: string
 }
-export interface TCompany {
+export interface ICompany {
 	created_at: string
 	description: string
 	id: number
@@ -18,4 +18,9 @@ export interface TCompany {
 	telegraph_bot: TBot
 	title: string
 	updated_at: string
+}
+
+export interface ICompaniesInitState {
+	companies: ICompany[]
+	companiesTotal: number
 }

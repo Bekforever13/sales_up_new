@@ -7,7 +7,7 @@ import { useActions, useSelectors } from 'src/hooks'
 
 const EditCourse: React.FC = () => {
 	const [open, setOpen] = useState(false)
-	const { fetch } = useActions()
+	const { setFetch } = useActions()
 	const { courseToEdit } = useSelectors()
 	const [newDataCourse, setNewDataСourse] = useState({
 		title: '',
@@ -18,7 +18,7 @@ const EditCourse: React.FC = () => {
 	const onEditSubmit = () => {
 		const obj = { id: courseToEdit?.id, ...newDataCourse }
 		axiosInstance.put(`/courses/${courseToEdit?.id}`, obj).then(() => {
-			fetch(Math.random())
+			setFetch(Math.random())
 			setOpen(false)
 		})
 	}

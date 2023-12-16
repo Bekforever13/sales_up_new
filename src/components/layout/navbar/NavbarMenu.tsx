@@ -5,6 +5,7 @@ import { BiSolidContact } from 'react-icons/bi'
 import { MdViewCompact } from 'react-icons/md'
 import { SlNotebook } from 'react-icons/sl'
 import { DiOpensource } from 'react-icons/di'
+import { RiAdminLine } from 'react-icons/ri'
 
 const NavbarMenu: React.FC = () => {
 	const navigate = useNavigate()
@@ -15,11 +16,13 @@ const NavbarMenu: React.FC = () => {
 		{ pathname: '/companies', icon: <MdViewCompact />, label: 'Филиалы' },
 		{ pathname: '/courses', icon: <SlNotebook />, label: 'Курсы' },
 		{ pathname: '/sources', icon: <DiOpensource />, label: 'Источники' },
+		{ pathname: '/users', icon: <RiAdminLine />, label: 'Пользователи' },
 	]
 
 	const handleClickRoute = (pathname: string) => {
 		navigate(pathname, { replace: true })
 	}
+	
 	return (
 		<>
 			{menuItems.map(item => {

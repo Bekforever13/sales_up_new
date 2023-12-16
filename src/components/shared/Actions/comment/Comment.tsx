@@ -3,18 +3,17 @@ import { axiosInstance } from 'src/services/axiosInstance'
 import { FaRegCommentAlt } from 'react-icons/fa'
 import { TLeads } from 'src/store/leads/Leads.types'
 import { UiButton, UiPopover } from 'src/components/ui'
-import { TOrder } from 'src/store/orders/Orders.types'
 import { useActions } from 'src/hooks'
 import { message } from 'antd'
 
 type TProps = {
-	user: TLeads | TOrder
+	user: TLeads
 	route: string
 }
 
 const Comment: React.FC<TProps> = ({ user, route }) => {
 	const [open, setOpen] = useState(false)
-	const { fetch } = useActions()
+	const { setFetch } = useActions()
 	const [comment, setComment] = useState({
 		...user,
 		comment: '',
@@ -22,12 +21,10 @@ const Comment: React.FC<TProps> = ({ user, route }) => {
 
 	const send = () => {
 		setOpen(false)
-		axiosInstance
-			.put(`/${route}/${user.id}`, comment)
-			.then(() => {
-				fetch(Math.random())
-				message.success('Успешно')
-			})
+		axiosInstance.put(`/${route}/${user.id}`, comment).then(() => {
+			setFetch(Math.random())
+			message.success('Успешно')
+		})
 	}
 
 	const handleOpenChange = (open: any) => setOpen(open)
