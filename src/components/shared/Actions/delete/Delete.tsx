@@ -4,12 +4,12 @@ import { UiPopconfirm } from 'src/components/ui'
 import { useActions } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 
-type TProps = {
+type Props = {
 	route: string
 	id: number
 }
 
-const Delete: React.FC<TProps> = ({ route, id }) => {
+const Delete: React.FC<Props> = ({ route, id }) => {
 	const { setFetch } = useActions()
 	
 	const handleDelete = () => {
