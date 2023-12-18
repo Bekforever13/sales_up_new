@@ -1,6 +1,7 @@
 import {
 	Home,
 	Sources,
+	SourceInfo,
 	Courses,
 	Leads,
 	Companies,
@@ -13,5 +14,6 @@ export const routes = [
 	{ path: '/companies', element: <Companies /> },
 	{ path: '/courses', element: <Courses /> },
 	{ path: '/sources', element: <Sources /> },
+	{ path: '/sources/:id', element: <SourceInfo /> },
 	{ path: '/users', element: <Users /> },
 ]

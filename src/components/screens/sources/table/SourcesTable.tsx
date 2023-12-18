@@ -6,6 +6,8 @@ import type { ColumnsType } from 'antd/es/table'
 import { TSource } from 'src/store/sources/Sources.types'
 import { useActions, useSelectors } from 'src/hooks'
 import { EditSource } from 'src/components/shared/Actions/edit/EditSource'
+import { MdOutlineContentPasteSearch } from 'react-icons/md'
+import { useNavigate } from 'react-router-dom'
 
 type TCoursesProps = {
 	page: any
@@ -14,6 +16,7 @@ type TCoursesProps = {
 
 const SourcesTable: React.FC<TCoursesProps> = ({ page, setPage }) => {
 	const { sources, sourcesTotal } = useSelectors()
+	const navigate = useNavigate()
 	const { setSourceToEdit } = useActions()
 
 	const columns: ColumnsType<TSource> = [
@@ -29,6 +32,9 @@ const SourcesTable: React.FC<TCoursesProps> = ({ page, setPage }) => {
 				<div className='flex items-center gap-5'>
 					<UiButton onClick={() => setSourceToEdit(rec)}>
 						<EditSource />
+					</UiButton>
+					<UiButton onClick={() => navigate(`/sources/${rec.id}`)}>
+						<MdOutlineContentPasteSearch size='22' />
 					</UiButton>
 					<UiButton>
 						<Delete route='sources' id={rec.id} />

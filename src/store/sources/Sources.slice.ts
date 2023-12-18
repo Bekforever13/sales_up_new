@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ISourceInitState, TSource } from './Sources.types'
+import { ISourceInitState, TLinkEditForm, TSource } from './Sources.types'
 
 const initialState: ISourceInitState = {
 	sources: [],
 	sourcesTotal: 10,
 	sourceToEdit: null,
 	sourceDrawer: false,
+	sourceInfoEdit: null,
 }
 
 const SourcesSlice = createSlice({
@@ -23,6 +24,9 @@ const SourcesSlice = createSlice({
 		},
 		setSourceDrawer(state, { payload }: PayloadAction<boolean>) {
 			state.sourceDrawer = payload
+		},
+		setSourceInfoEdit(state, { payload }: PayloadAction<TLinkEditForm>) {
+			state.sourceInfoEdit = payload
 		},
 	},
 })
