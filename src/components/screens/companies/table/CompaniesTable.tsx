@@ -3,13 +3,14 @@ import { useSelectors } from 'src/hooks/useSelectors'
 import { TCompaniesProps } from './CompaniesTable.types'
 import type { ColumnsType } from 'antd/es/table'
 import UiTable from 'src/components/ui/table/UiTable'
-import { BsPencilSquare } from 'react-icons/bs'
-import { IoTrashOutline } from 'react-icons/io5'
 import { ICompany } from 'src/store/companies/Companies.types'
 import { UiButton } from 'src/components/ui'
+import { Delete, EditCompany } from 'src/components/shared'
+import { useActions } from 'src/hooks'
 
 const CompaniesTable: React.FC<TCompaniesProps> = ({ page, setPage }) => {
 	const { companies, companiesTotal } = useSelectors()
+	const { setCompaniesEdit } = useActions()
 
 	const handleChangePage = (event: number) => setPage(event)
 
@@ -38,18 +39,18 @@ const CompaniesTable: React.FC<TCompaniesProps> = ({ page, setPage }) => {
 		{
 			title: 'Билеты',
 			dataIndex: 'tickets',
-			render: () => <div>билет</div>,
 		},
 		{
 			title: 'Действия',
 			dataIndex: 'actions',
-			render: () => (
+			width: 150,
+			render: (_, rec) => (
 				<div className='flex items-center gap-2'>
-					<UiButton>
-						<BsPencilSquare size='22' />
+					<UiButton onClick={() => setCompaniesEdit(rec)}>
+						<EditCompany />
 					</UiButton>
 					<UiButton>
-						<IoTrashOutline size='22' />
+						<Delete route='companies' id={rec.id} />
 					</UiButton>
 				</div>
 			),

@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ICompany, ICompaniesInitState } from './Companies.types'
+import { ICompany, ICompaniesInitState, TCompanyForm } from './Companies.types'
 
 const initialState: ICompaniesInitState = {
 	companies: [],
 	companiesTotal: 10,
+	companiesEdit: null,
+	companiesDrawer: false,
 }
 
 const CompaniesSlice = createSlice({
@@ -15,6 +17,12 @@ const CompaniesSlice = createSlice({
 		},
 		setCompaniesTotal: (state, { payload }: PayloadAction<number>) => {
 			state.companiesTotal = payload
+		},
+		setCompaniesDrawer: (state, { payload }: PayloadAction<boolean>) => {
+			state.companiesDrawer = payload
+		},
+		setCompaniesEdit: (state, { payload }: PayloadAction<TCompanyForm>) => {
+			state.companiesEdit = payload
 		},
 	},
 })

@@ -13,7 +13,7 @@ const NavbarMenu: React.FC = () => {
 	const menuItems = [
 		{ pathname: '/', icon: <AiOutlineHome />, label: 'Главная' },
 		{ pathname: '/leads', icon: <BiSolidContact />, label: 'Лиды' },
-		{ pathname: '/companies', icon: <MdViewCompact />, label: 'Филиалы' },
+		{ pathname: '/companies', icon: <MdViewCompact />, label: 'Компании' },
 		{ pathname: '/courses', icon: <SlNotebook />, label: 'Курсы' },
 		{ pathname: '/sources', icon: <DiOpensource />, label: 'Источники' },
 		{ pathname: '/users', icon: <RiAdminLine />, label: 'Пользователи' },

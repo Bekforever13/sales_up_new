@@ -20,7 +20,16 @@ export interface ICompany {
 	updated_at: string
 }
 
+export type TCompanyForm = {
+	id?: number
+	title: string
+	description: string
+	telegram_channel?: string
+}
+
 export interface ICompaniesInitState {
+	companiesDrawer: boolean
+	companiesEdit: TCompanyForm | null
 	companies: ICompany[]
 	companiesTotal: number
 }
