@@ -8,13 +8,13 @@ import { AddCourseDrawer } from './drawer/AddCourseDrawer'
 
 const Courses: React.FC = () => {
 	const [loading, setLoading] = useState(false)
-	const [open, setOpen] = useState(false)
 	const [page, setPage] = useState(1)
 	const { fetch } = useSelectors()
+	const { setCourseDrawer } = useActions()
 
 	const { setCourses, setCoursesTotal } = useActions()
 
-	const showDrawer = () => setOpen(true)
+	const showDrawer = () => setCourseDrawer(true)
 
 	useEffect(() => {
 		setLoading(true)
@@ -31,7 +31,7 @@ const Courses: React.FC = () => {
 		<div className='text-black dark:text-white bg-[#ececec] dark:bg-slate-600 p-5 rounded-xl flex flex-col gap-y-5'>
 			<div className='w-fit'>
 				<UiButton onClick={showDrawer}>Добавить</UiButton>
-				<AddCourseDrawer open={open} setOpen={setOpen} />
+				<AddCourseDrawer />
 			</div>
 			<Spin spinning={loading}>
 				<CoursesTable page={page} setPage={setPage} />

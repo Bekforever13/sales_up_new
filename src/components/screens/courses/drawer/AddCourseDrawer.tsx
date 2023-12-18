@@ -1,30 +1,24 @@
 import React, { useState } from 'react'
 import { UiButton, UiDrawer, UiInput } from 'src/components/ui'
-import { useActions } from 'src/hooks'
+import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 
-type TProps = {
-	open: boolean
-	setOpen: (e: React.SetStateAction<boolean>) => void
-}
-
-const AddCourseDrawer: React.FC<TProps> = ({ setOpen, open }) => {
-	const { setFetch } = useActions()
+const AddCourseDrawer: React.FC = () => {
+	const { setFetch, setCourseDrawer } = useActions()
+	const { courseDrawer } = useSelectors()
 	const [newCourse, setNewСourse] = useState({
 		title: '',
 		description: '',
-		price: '',
 	})
 
-	const onClose = () => setOpen(false)
+	const onClose = () => setCourseDrawer(false)
 
 	const onSubmit = () => {
 		axiosInstance.post('/courses', newCourse).then(() => {
-			setOpen(false)
+			setCourseDrawer(false)
 			setNewСourse({
 				title: '',
 				description: '',
-				price: '',
 			})
 			setFetch(Math.random())
 		})
@@ -35,7 +29,7 @@ const AddCourseDrawer: React.FC<TProps> = ({ setOpen, open }) => {
 			placement='right'
 			title='Новый курс'
 			onClose={onClose}
-			open={open}
+			open={courseDrawer}
 		>
 			<UiInput
 				className='w-full border-[1px] border-black py-2 px-4 rounded-md mb-5'
@@ -43,13 +37,6 @@ const AddCourseDrawer: React.FC<TProps> = ({ setOpen, open }) => {
 				type='text'
 				value={newCourse.title}
 				onChange={e => setNewСourse({ ...newCourse, title: e.target.value })}
-			/>
-			<UiInput
-				className='w-full border-[1px] border-black py-2 px-4 rounded-md mb-5'
-				placeholder='Цена...'
-				type='number'
-				value={newCourse.price}
-				onChange={e => setNewСourse({ ...newCourse, price: e.target.value })}
 			/>
 			<UiInput
 				className='w-full border-[1px] border-black py-2 px-4 rounded-md mb-5'

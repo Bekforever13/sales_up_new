@@ -12,7 +12,6 @@ const EditCourse: React.FC = () => {
 	const [newDataCourse, setNewDataСourse] = useState({
 		title: '',
 		description: '',
-		price: '',
 	})
 
 	const onEditSubmit = () => {
@@ -36,15 +35,6 @@ const EditCourse: React.FC = () => {
 			/>
 			<UiInput
 				className='w-full border-[1px] border-black py-2 px-4 rounded-md'
-				placeholder='Цена...'
-				value={newDataCourse.price}
-				onChange={e =>
-					setNewDataСourse({ ...newDataCourse, price: e.target.value })
-				}
-				type='text'
-			/>
-			<UiInput
-				className='w-full border-[1px] border-black py-2 px-4 rounded-md'
 				placeholder='Описание...'
 				value={newDataCourse.description}
 				onChange={e =>
@@ -61,7 +51,6 @@ const EditCourse: React.FC = () => {
 			setNewDataСourse({
 				title: courseToEdit.title,
 				description: courseToEdit.description,
-				price: courseToEdit.price,
 			})
 		}
 	}, [courseToEdit])

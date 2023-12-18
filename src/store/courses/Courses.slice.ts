@@ -5,6 +5,7 @@ const initialState: ICoursesInitState = {
 	courses: [],
 	coursesTotal: 10,
 	courseToEdit: null,
+	courseDrawer: false
 }
 
 const Courses = createSlice({
@@ -19,6 +20,9 @@ const Courses = createSlice({
 		},
 		setCourseToEdit(state, { payload }: PayloadAction<TCourse>) {
 			state.courseToEdit = payload
+		},
+		setCourseDrawer(state, { payload }: PayloadAction<boolean>) {
+			state.courseDrawer = payload
 		},
 	},
 })
