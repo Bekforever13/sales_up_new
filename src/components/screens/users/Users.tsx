@@ -4,11 +4,13 @@ import { axiosInstance } from 'src/services/axiosInstance'
 import { Spin } from 'antd'
 import { useActions } from 'src/hooks/useActions'
 import { useSelectors } from 'src/hooks'
+import { UiButton } from 'src/components/ui'
+import { AddUserDrawer } from './drawer/AddUserDrawer'
 
 const Users: React.FC = () => {
 	const [loading, setLoading] = useState(false)
 	const [page, setPage] = useState(1)
-	const { setUsers, setUsersTotal } = useActions()
+	const { setUsers, setUsersTotal, setUserDrawer } = useActions()
 	const { fetch } = useSelectors()
 
 	useEffect(() => {
@@ -26,6 +28,10 @@ const Users: React.FC = () => {
 	return (
 		<Spin spinning={loading}>
 			<div className='text-black dark:text-white bg-[#ececec] dark:bg-slate-600 p-5 rounded-xl flex flex-col gap-y-5'>
+				<UiButton className='w-fit' onClick={() => setUserDrawer(true)}>
+					Добавить
+				</UiButton>
+				<AddUserDrawer />
 				<UsersTable page={page} setPage={setPage} />
 			</div>
 		</Spin>

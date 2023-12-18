@@ -4,7 +4,7 @@ import { CoursesTable } from './table/CoursesTable'
 import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 import { Spin } from 'antd'
-import { AddCourseDrawer } from './addCourseDrawer/AddCourseDrawer'
+import { AddCourseDrawer } from './drawer/AddCourseDrawer'
 
 const Courses: React.FC = () => {
 	const [loading, setLoading] = useState(false)

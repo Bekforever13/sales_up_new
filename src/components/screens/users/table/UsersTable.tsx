@@ -1,19 +1,39 @@
 import React from 'react'
 import { useSelectors } from 'src/hooks/useSelectors'
 import { TLeadsProps } from './UsersTable.types'
-import { TLeads } from 'src/store/leads/Leads.types'
 import type { ColumnsType } from 'antd/es/table'
 import UiTable from 'src/components/ui/table/UiTable'
 import { BsPencilSquare } from 'react-icons/bs'
 import { IoTrashOutline } from 'react-icons/io5'
-import { UiButton } from 'src/components/ui'
+import { UiButton, UiPopconfirm } from 'src/components/ui'
+import { axiosInstance } from 'src/services/axiosInstance'
+import { useActions } from 'src/hooks'
+import { TUser } from 'src/store/users/Users.types'
 
 const UsersTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 	const { users, usersTotal } = useSelectors()
+	const { setFetch, setUserToEdit, setUserDrawer } = useActions()
 
 	const handleChangePage = (event: number) => setPage(event)
 
-	const columns: ColumnsType<TLeads> = [
+	const handleDelete = (id: number) => {
+		axiosInstance
+			.delete(`/admin/users/${id}`)
+			.then(() => setFetch(Math.random()))
+	}
+
+	const handleEdit = (rec: TUser) => {
+		setUserToEdit({
+			id: rec.id,
+			name: rec.name,
+			phone: rec.phone,
+			role_id: rec.role_id,
+			password: '',
+		})
+		setUserDrawer(true)
+	}
+
+	const columns: ColumnsType<TUser> = [
 		{
 			title: 'ФИО',
 			dataIndex: 'name',
@@ -33,14 +53,19 @@ const UsersTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 		{
 			title: 'Действия',
 			dataIndex: 'actions',
-			render: () => (
+			render: (_, rec) => (
 				<div className='flex items-center gap-2'>
-					<UiButton>
+					<UiButton onClick={() => handleEdit(rec)}>
 						<BsPencilSquare size='22' className='cursor-pointer' />
 					</UiButton>
-					<UiButton>
-						<IoTrashOutline size='22' className='cursor-pointer' />
-					</UiButton>
+					<UiPopconfirm
+						title='Вы действительно хотите удалить?'
+						onConfirm={() => handleDelete(rec.id)}
+					>
+						<UiButton>
+							<IoTrashOutline size='22' className='cursor-pointer' />
+						</UiButton>
+					</UiPopconfirm>
 				</div>
 			),
 		},
