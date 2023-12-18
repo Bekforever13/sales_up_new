@@ -24,7 +24,7 @@ const AddUserDrawer: React.FC = () => {
 			? axiosInstance
 					.put(`/admin/users/${userToEdit.id}`, {
 						name: values.name,
-						phone: values.phone,
+						phone: values.phone.replace(/\D/g, ''),
 						role_id: values.role_id,
 						password: values.password || undefined,
 					})

@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ILeadsInitState, TLeads } from './Leads.types'
+import { ILeadsInitState, TLeads, TLeadsForm } from './Leads.types'
 
 const initialState: ILeadsInitState = {
 	leads: [],
 	leadsTotal: 10,
+	leadsToEdit: null,
+	leadsDrawer: false,
 }
 
 const LeadsSlice = createSlice({
@@ -16,8 +18,11 @@ const LeadsSlice = createSlice({
 		setLeadsTotal: (state, { payload }: PayloadAction<number>) => {
 			state.leadsTotal = payload
 		},
-		changeStatus: (state, { payload }: PayloadAction<any>) => {
-			state.leads = payload
+		setLeadsDrawer: (state, { payload }: PayloadAction<boolean>) => {
+			state.leadsDrawer = payload
+		},
+		setLeadsToEdit: (state, { payload }: PayloadAction<TLeadsForm>) => {
+			state.leadsToEdit = payload
 		},
 	},
 })
