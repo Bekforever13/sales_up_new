@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Popover } from 'antd'
 import { FaEdit } from 'react-icons/fa'
 import { axiosInstance } from 'src/services/axiosInstance'
-import { UiButton, UiInput, UiSelect } from 'src/components/ui'
+import { UiButton, UiInput } from 'src/components/ui'
 import { useActions, useSelectors } from 'src/hooks'
 
 const EditSource: React.FC = () => {
@@ -10,19 +10,8 @@ const EditSource: React.FC = () => {
 	const { setFetch } = useActions()
 	const { sourceToEdit } = useSelectors()
 	const [newDataSource, setNewDataSource] = useState({
-		name: sourceToEdit?.name,
-		type: sourceToEdit?.type,
+		title: sourceToEdit?.title,
 	})
-	const options = [
-		{
-			value: 'Telegram Bot',
-			label: 'Telegram Bot',
-		},
-		{
-			value: 'Web',
-			label: 'Web',
-		},
-	]
 
 	const onSubmit = () => {
 		const obj = { id: sourceToEdit?.id, ...newDataSource }
@@ -37,13 +26,12 @@ const EditSource: React.FC = () => {
 			<UiInput
 				className='w-full border-[1px] border-black py-2 px-4 rounded-md'
 				placeholder='Название...'
-				value={newDataSource.name}
+				value={newDataSource.title}
 				onChange={e =>
-					setNewDataSource({ ...newDataSource, name: e.target.value })
+					setNewDataSource({ ...newDataSource, title: e.target.value })
 				}
 				type='text'
 			/>
-			<UiSelect options={options} defaultValue={sourceToEdit?.type} />
 			<UiButton onClick={onSubmit}>Сохранить</UiButton>
 		</div>
 	)
@@ -51,8 +39,7 @@ const EditSource: React.FC = () => {
 	useEffect(() => {
 		if (sourceToEdit) {
 			setNewDataSource({
-				name: sourceToEdit.name,
-				type: sourceToEdit.type,
+				title: sourceToEdit.title,
 			})
 		}
 	}, [sourceToEdit])
