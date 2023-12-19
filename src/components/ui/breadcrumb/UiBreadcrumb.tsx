@@ -18,10 +18,10 @@ const UiBreadCrumbs: React.FC = () => {
 				<Breadcrumb>
 					{pathnames.length > 0 ? (
 						<Breadcrumb.Item>
-							<Link to='/'>Home</Link>
+							<Link to='/'>Главная</Link>
 						</Breadcrumb.Item>
 					) : (
-						<Breadcrumb.Item>Home</Breadcrumb.Item>
+						<Breadcrumb.Item>Главная</Breadcrumb.Item>
 					)}
 					{pathnames.map((name, index) => {
 						const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`

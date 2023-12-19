@@ -12,12 +12,8 @@ import { AddNewLead } from './drawer/AddNewLead'
 const Leads: React.FC = () => {
 	const [loading, setLoading] = useState(false)
 	const [page, setPage] = useState(1)
-	const [name, setName] = useState('')
-	const [phone, setPhone] = useState('')
-	const debouncedName = useDebounce(name, 500)
-	const debouncedPhone = useDebounce(phone, 500)
-	const [dateFrom, setDateFrom] = useState('')
-	const [dateTo, setDateTo] = useState('')
+	const [search, setSearch] = useState('')
+	const debouncedSearch = useDebounce(search, 500)
 	const { setLeads, setLeadsTotal, setLeadsDrawer } = useActions()
 	const { fetch } = useSelectors()
 
@@ -27,10 +23,7 @@ const Leads: React.FC = () => {
 			.get(
 				`/leads?limit=10
 				${page ? `&page=${page}` : ''}
-				${debouncedName ? `&name=${debouncedName}` : ''}
-				${debouncedPhone ? `&phone=${debouncedPhone}` : ''}
-				${dateFrom ? `&from=${dateFrom}` : ''}
-				${dateTo ? `&to=${dateTo}` : ''}`
+				${debouncedSearch ? `&search=${debouncedSearch}` : ''}`
 			)
 			.then(res => {
 				setLeadsTotal(res.data.total)
@@ -38,20 +31,13 @@ const Leads: React.FC = () => {
 			})
 			.catch(err => console.log(err))
 			.finally(() => setLoading(false))
-	}, [page, debouncedName, debouncedPhone, dateFrom, dateTo, fetch])
+	}, [page, debouncedSearch, fetch])
 
 	return (
 		<Spin spinning={loading}>
 			<div className='text-black dark:text-white bg-[#ececec] dark:bg-slate-600 py-1 px-5 rounded-xl flex flex-col gap-y-5'>
 				<div className='flex items-center justify-between'>
-					<LeadsFilters
-						name={name}
-						setName={setName}
-						phone={phone}
-						setPhone={setPhone}
-						setDateFrom={setDateFrom}
-						setDateTo={setDateTo}
-					/>
+					<LeadsFilters search={search} setSearch={setSearch} />
 					<UiButton onClick={() => setLeadsDrawer(true)} size='large'>
 						Добавить
 					</UiButton>
