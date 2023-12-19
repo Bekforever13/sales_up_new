@@ -5,10 +5,13 @@ import type { ColumnsType } from 'antd/es/table'
 import UiTable from 'src/components/ui/table/UiTable'
 import { ICompany } from 'src/store/companies/Companies.types'
 import { UiButton } from 'src/components/ui'
-import { Delete, EditCompany } from 'src/components/shared'
+import { Delete } from 'src/components/shared'
 import { useActions } from 'src/hooks'
+import { useNavigate } from 'react-router-dom'
+import { FaEdit } from 'react-icons/fa'
 
 const CompaniesTable: React.FC<TCompaniesProps> = ({ page, setPage }) => {
+	const navigate = useNavigate()
 	const { companies, companiesTotal } = useSelectors()
 	const { setCompaniesEdit } = useActions()
 
@@ -46,8 +49,21 @@ const CompaniesTable: React.FC<TCompaniesProps> = ({ page, setPage }) => {
 			width: 150,
 			render: (_, rec) => (
 				<div className='flex items-center gap-2'>
-					<UiButton onClick={() => setCompaniesEdit(rec)}>
-						<EditCompany />
+					<UiButton
+						onClick={() => {
+							setCompaniesEdit({
+								id: rec.id,
+								title: rec.title,
+								description: rec.description,
+								telegram_channel: rec.telegram_channel,
+								phone: rec.phone,
+								lat: rec.lat,
+								lng: rec.lng,
+							})
+							navigate(`/companies/${rec.id}`)
+						}}
+					>
+						<FaEdit size='22' className='cursor-pointer' />
 					</UiButton>
 					<UiButton>
 						<Delete route='companies' id={rec.id} />
@@ -58,23 +74,21 @@ const CompaniesTable: React.FC<TCompaniesProps> = ({ page, setPage }) => {
 	]
 
 	return (
-		<>
-			<UiTable
-				columns={columns}
-				dataSource={companies}
-				pagination={{
-					total: companiesTotal,
-					current: page,
-					showSizeChanger: false,
-					defaultPageSize: 10,
-					onChange: handleChangePage,
-				}}
-				scroll={{ x: true }}
-				rowKey={e => e.id}
-				size='small'
-				bordered
-			/>
-		</>
+		<UiTable
+			columns={columns}
+			dataSource={companies}
+			pagination={{
+				total: companiesTotal,
+				current: page,
+				showSizeChanger: false,
+				defaultPageSize: 10,
+				onChange: handleChangePage,
+			}}
+			scroll={{ x: true }}
+			rowKey={e => e.id}
+			size='small'
+			bordered
+		/>
 	)
 }
 

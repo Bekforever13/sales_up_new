@@ -35,7 +35,7 @@ const Leads: React.FC = () => {
 
 	return (
 		<Spin spinning={loading}>
-			<div className='text-black dark:text-white bg-[#ececec] dark:bg-slate-600 py-1 px-5 rounded-xl flex flex-col gap-y-5'>
+			<div className='text-black dark:text-white bg-[#ececec] dark:bg-slate-600 p-5 rounded-xl flex flex-col gap-y-5'>
 				<div className='flex items-center justify-between'>
 					<LeadsFilters search={search} setSearch={setSearch} />
 					<UiButton onClick={() => setLeadsDrawer(true)} size='large'>

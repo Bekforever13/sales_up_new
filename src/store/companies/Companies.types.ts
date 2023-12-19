@@ -25,6 +25,9 @@ export type TCompanyForm = {
 	title: string
 	description: string
 	telegram_channel?: string
+	phone: string
+	lat: number
+	lng: number
 }
 
 export interface ICompaniesInitState {

@@ -10,16 +10,14 @@ const LeadsFilters: React.FC<TProps> = props => {
 	const { search, setSearch } = props
 
 	return (
-		<div className='leads__wrapper p-3'>
-			<UiInput
-				allowClear
-				size='large'
-				placeholder='Введите имя или номер'
-				value={search}
-				style={{minWidth: '400px'}}
-				onChange={e => setSearch(e.target.value)}
-			/>
-		</div>
+		<UiInput
+			allowClear
+			size='large'
+			placeholder='Введите имя или номер'
+			value={search}
+			style={{ maxWidth: '400px' }}
+			onChange={e => setSearch(e.target.value)}
+		/>
 	)
 }
 

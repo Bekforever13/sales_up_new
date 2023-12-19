@@ -28,6 +28,7 @@ const AddNewLead: React.FC = () => {
 					})
 					.then(() => {
 						setLeadsDrawer(false)
+						form.resetFields()
 						setFetch(Math.random())
 					})
 			: axiosInstance
@@ -37,6 +38,7 @@ const AddNewLead: React.FC = () => {
 					})
 					.then(() => {
 						setLeadsDrawer(false)
+						form.resetFields()
 						setFetch(Math.random())
 					})
 	}

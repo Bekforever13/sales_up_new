@@ -6,23 +6,31 @@ import { MdViewCompact } from 'react-icons/md'
 import { SlNotebook } from 'react-icons/sl'
 import { DiOpensource } from 'react-icons/di'
 import { RiAdminLine } from 'react-icons/ri'
+import { useSelectors } from 'src/hooks'
+import { FaRegCircleUser } from 'react-icons/fa6'
 
 const NavbarMenu: React.FC = () => {
 	const navigate = useNavigate()
 	const { pathname } = useLocation()
+	const { currentRoleId } = useSelectors()
+
 	const menuItems = [
 		{ pathname: '/', icon: <AiOutlineHome />, label: 'Главная' },
-		{ pathname: '/leads', icon: <BiSolidContact />, label: 'Лиды' },
 		{ pathname: '/companies', icon: <MdViewCompact />, label: 'Компании' },
+		{ pathname: '/leads', icon: <BiSolidContact />, label: 'Лиды' },
+		{
+			pathname: '/telegram_leads',
+			icon: <FaRegCircleUser />,
+			label: 'Телеграм-Лиды',
+		},
 		{ pathname: '/courses', icon: <SlNotebook />, label: 'Курсы' },
 		{ pathname: '/sources', icon: <DiOpensource />, label: 'Источники' },
-		{ pathname: '/users', icon: <RiAdminLine />, label: 'Пользователи' },
 	]
 
 	const handleClickRoute = (pathname: string) => {
 		navigate(pathname, { replace: true })
 	}
-	
+
 	return (
 		<>
 			{menuItems.map(item => {
@@ -40,6 +48,18 @@ const NavbarMenu: React.FC = () => {
 					</div>
 				)
 			})}
+			{currentRoleId === 1 && (
+				<div
+					onClick={() => handleClickRoute('/users')}
+					key='/users'
+					className={`flex items-center gap-3 py-[10px] px-5 rounded-2xl cursor-pointer hover:bg-[#d9d9d9] dark:hover:bg-black-alpha-10 ${
+						pathname === '/users' && 'bg-[#d3d3d3] dark:bg-black-alpha-20'
+					}`}
+				>
+					<RiAdminLine />
+					Пользователи
+				</div>
+			)}
 		</>
 	)
 }

@@ -3,10 +3,14 @@ import { Outlet } from 'react-router-dom'
 import { Header } from './header/Header'
 import { Navbar } from './navbar/Navbar'
 import { axiosInstance } from 'src/services/axiosInstance'
+import { useActions } from 'src/hooks'
 
 const AdminLayout: React.FC = () => {
+	const { setCurrentRoleId } = useActions()
 	React.useEffect(() => {
-		axiosInstance.get('/auth/user')
+		axiosInstance
+			.get('/auth/user')
+			.then(res => setCurrentRoleId(res.data.data.role_id))
 	}, [])
 
 	return (

@@ -32,3 +32,10 @@ input::-webkit-inner-spin-button {
 .ant-btn-primary * {
 	color: #fff !important;
 }
+
+.ant-message-notice-content * {
+	color: #000 !important;
+}
+.ant-message-success * {
+	fill: green !important;
+}

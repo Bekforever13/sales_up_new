@@ -35,6 +35,7 @@ const ActiveCompany: FC = () => {
 		<>
 			<p className='text-xs'>Активная компания</p>
 			<UiSelect
+				style={{ width: '100%' }}
 				options={options}
 				value={activeCompany}
 				onChange={e => handleSelect(e)}
