@@ -1,18 +1,24 @@
 import { Modal } from 'antd'
-import React, { useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 import { TMessage } from './TelegramChat.types'
 import { IoMdCloseCircleOutline } from 'react-icons/io'
 import { BiSend } from 'react-icons/bi'
 import { UiButton } from 'src/components/ui'
+import Pusher from 'pusher-js'
 
-const TelegramChat: React.FC = () => {
+const TelegramChat: FC = () => {
 	const { telegramChatID, fetch, telegramChatDrawer } = useSelectors()
 	const { setTelegramChatDrawer, setFetch } = useActions()
 	const inputRef = useRef<HTMLInputElement>(null)
 	const [value, setValue] = useState('')
 	const [messages, setMessages] = useState<TMessage[]>([])
+
+	Pusher.logToConsole = true
+	var pusher = new Pusher('720c4842f035545b5048', {
+		cluster: 'eu',
+	})
 
 	const handleCancel = () => {
 		setTelegramChatDrawer(false)
@@ -24,8 +30,30 @@ const TelegramChat: React.FC = () => {
 			.post(`/telegraph-chats/${telegramChatID}/messages`, {
 				text: value,
 			})
-			.then(() => setFetch(Math.random()))
+			.then(() => {
+				setFetch(Math.random())
+			})
 	}
+
+	useEffect(() => {
+		let channel = pusher.subscribe(`telegraph-chats.${telegramChatID}.messages`)
+		const handleNewMessage = (newMsg: TMessage) => {
+			if (!messages.some(msg => msg.id === newMsg.id)) {
+				setMessages(prev => [...prev, newMsg])
+				setTimeout(() => {
+					inputRef.current?.focus()
+					inputRef.current?.scrollIntoView({
+						behavior: 'smooth',
+					})
+				}, 300)
+			}
+		}
+		channel.bind('chat', handleNewMessage)
+		return () => {
+			channel.unbind('chat', handleNewMessage)
+			channel.unsubscribe()
+		}
+	}, [pusher, telegramChatID, messages])
 
 	useEffect(() => {
 		if (telegramChatID !== 0) {
@@ -67,16 +95,16 @@ const TelegramChat: React.FC = () => {
 		>
 			<div className='h-[500px] flex flex-col overflow-y-auto p-5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-t-lg w-full'>
 				<div className='flex-1'>
-					{messages?.map(el =>
+					{messages?.map((el, i) =>
 						el.is_answer === false ? (
-							<p key={el.id} className='py-2 w-full text-left rounded-3xl'>
-								<span className='bg-indigo-500 rounded-tr-3xl rounded-br-3xl rounded-tl-3xl p-2'>
+							<p key={i} className='py-2 w-full text-left rounded-3xl'>
+								<span className='bg-indigo-500 rounded-tr-3xl rounded-br-3xl rounded-tl-3xl p-2 text-white dark:text-white'>
 									{el.text}
 								</span>
 							</p>
 						) : (
 							<p key={el.id} className='py-2 w-full text-right rounded-3xl'>
-								<span className='bg-indigo-500 rounded-tr-3xl rounded-bl-3xl rounded-tl-3xl p-2'>
+								<span className='bg-indigo-500 rounded-tr-3xl rounded-bl-3xl rounded-tl-3xl p-2 text-white dark:text-white'>
 									{el.text}
 								</span>
 							</p>
