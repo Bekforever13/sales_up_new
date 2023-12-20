@@ -64,7 +64,7 @@ const TelegramChat: React.FC = () => {
 			closeIcon={<IoMdCloseCircleOutline />}
 			cancelButtonProps={{ style: { color: '#000000 !important' } }}
 		>
-			<div className='h-[300px] flex flex-col overflow-y-auto p-5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-t-lg w-full'>
+			<div className='h-[500px] flex flex-col overflow-y-auto p-5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-t-lg w-full'>
 				<div className='flex-1'>
 					{messages?.map(el =>
 						el.is_answer === false ? (
