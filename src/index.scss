@@ -15,6 +15,18 @@ input::-webkit-inner-spin-button {
 	-webkit-appearance: none;
 }
 
+// scroll bar
+::-webkit-scrollbar {
+	width: 10px;
+	border-radius: 50%;
+}
+::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.2);
+}
+
 .app {
 	background-color: var(--clr-bg);
 
@@ -36,6 +48,7 @@ input::-webkit-inner-spin-button {
 .ant-message-notice-content * {
 	color: #000 !important;
 }
+
 .ant-message-success * {
 	fill: green !important;
 }

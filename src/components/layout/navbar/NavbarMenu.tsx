@@ -8,6 +8,7 @@ import { DiOpensource } from 'react-icons/di'
 import { RiAdminLine } from 'react-icons/ri'
 import { useSelectors } from 'src/hooks'
 import { FaRegCircleUser } from 'react-icons/fa6'
+import { IoTicketOutline } from 'react-icons/io5'
 
 const NavbarMenu: React.FC = () => {
 	const navigate = useNavigate()
@@ -18,6 +19,7 @@ const NavbarMenu: React.FC = () => {
 		{ pathname: '/', icon: <AiOutlineHome />, label: 'Главная' },
 		{ pathname: '/companies', icon: <MdViewCompact />, label: 'Компании' },
 		{ pathname: '/leads', icon: <BiSolidContact />, label: 'Лиды' },
+		{ pathname: '/tickets', icon: <IoTicketOutline />, label: 'Билеты' },
 		{
 			pathname: '/telegram_leads',
 			icon: <FaRegCircleUser />,

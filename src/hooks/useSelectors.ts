@@ -4,8 +4,17 @@ import { RootState } from 'src/store'
 const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 export const useSelectors = () => {
-	const { auth, leads, sources, shared, courses, companies, users, telegraph } =
-		useAppSelector(s => s)
+	const {
+		auth,
+		leads,
+		sources,
+		shared,
+		courses,
+		companies,
+		users,
+		telegraph,
+		tickets,
+	} = useAppSelector(s => s)
 
 	return {
 		...auth,
@@ -16,5 +25,6 @@ export const useSelectors = () => {
 		...shared,
 		...companies,
 		...users,
+		...tickets,
 	}
 }

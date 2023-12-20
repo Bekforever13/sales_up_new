@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { UiButton, UiDrawer, UiInput, UiSelect } from 'src/components/ui'
 import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
-import { TDrawerForm } from 'src/store/users/Users.types'
+import { TUserDrawerForm } from 'src/store/users/Users.types'
 
 const roles = [
 	{ label: 'Админ', value: 1 },
@@ -19,12 +19,12 @@ const AddUserDrawer: React.FC = () => {
 
 	const onClose = () => setUserDrawer(false)
 
-	const onFinish = (values: TDrawerForm) => {
+	const onFinish = (values: TUserDrawerForm) => {
 		userToEdit
 			? axiosInstance
 					.put(`/admin/users/${userToEdit.id}`, {
 						name: values.name,
-						phone: values.phone.replace(/\D/g, ''),
+						phone: `+${values.phone.replace(/\D/g, '')}`,
 						role_id: values.role_id,
 						password: values.password || undefined,
 					})

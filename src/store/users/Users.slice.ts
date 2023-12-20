@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUsersInitState, TUser, TDrawerForm } from './Users.types'
+import { IUsersInitState, TUser, TUserDrawerForm } from './Users.types'
 
 const initialState: IUsersInitState = {
 	users: [],
 	usersTotal: 10,
 	userToEdit: null,
-	userDrawer: false
+	userDrawer: false,
 }
 
 const UsersSlice = createSlice({
@@ -21,7 +21,7 @@ const UsersSlice = createSlice({
 		setUserDrawer(state, { payload }: PayloadAction<boolean>) {
 			state.userDrawer = payload
 		},
-		setUserToEdit(state, { payload }: PayloadAction<TDrawerForm>) {
+		setUserToEdit(state, { payload }: PayloadAction<TUserDrawerForm>) {
 			state.userToEdit = payload
 		},
 	},

@@ -9,6 +9,7 @@ import { actions as shared } from 'src/store/shared/Shared.slice'
 import { actions as companies } from 'src/store/companies/Companies.slice'
 import { actions as users } from 'src/store/users/Users.slice'
 import { actions as telegraph } from 'src/store/telegraph/Telegraph.slice'
+import { actions as tickets } from 'src/store/tickets/Tickets.slice'
 
 const rootActions = {
 	...auth,
@@ -18,7 +19,8 @@ const rootActions = {
 	...shared,
 	...companies,
 	...users,
-	...telegraph
+	...telegraph,
+	...tickets,
 }
 
 export const useActions = () => {

@@ -66,7 +66,9 @@ const Auth: React.FC = () => {
 				onSubmit={handleSubmit(onSubmit)}
 				className='flex items-center justify-center flex-col w-[40%] h-[50%] bg-white gap-y-8 rounded-md shadow-lg px-[5%]'
 			>
-				<h1 className='text-3xl text-[#1a76d2] font-bold'>Sales UP</h1>
+				<h1 className='text-3xl text-[#1a76d2] dark:text-[#1a76d2] font-bold select-none'>
+					Sales UP
+				</h1>
 				<Controller
 					name='phone'
 					control={control}
@@ -79,28 +81,34 @@ const Auth: React.FC = () => {
 						<MaskedInput
 							{...field}
 							mask='+{998}00 000 00 00'
-							className='w-full px-4 py-2 rounded-md border outline-none'
+							className='w-full px-4 py-2 rounded-md border dark:text-black outline-none'
 							placeholder='Телефон'
 						/>
 					)}
 				/>
 				<div className='w-full relative'>
 					<input
-						className='w-full px-4 py-[7px] rounded-md border outline-none'
+						className='w-full px-4 py-[7px] rounded-md border outline-none dark:text-black'
 						type={showPassword ? 'text' : 'password'}
 						{...register('password', { required: true })}
 						placeholder='Пароль'
 					/>
-					<div className='absolute top-2 right-3'>
+					<div className='absolute top-2 right-3 dark:text-black text-black'>
 						{showPassword ? (
-							<FaEyeSlash onClick={() => setShowPassword(false)} />
+							<FaEyeSlash
+								className='dark:text-black text-black'
+								onClick={() => setShowPassword(false)}
+							/>
 						) : (
-							<FaEye onClick={() => setShowPassword(true)} />
+							<FaEye
+								className='dark:text-black text-black'
+								onClick={() => setShowPassword(true)}
+							/>
 						)}
 					</div>
 				</div>
 				<button
-					className='w-full px-4 py-2 h-fit text-lg text-white font-medium'
+					className='w-full px-4 py-2 h-fit text-lg text-white font-medium select-none'
 					style={{ backgroundColor: '#1976D2' }}
 					type='submit'
 					disabled={!isValid || isButtonDisabled}

@@ -12,4 +12,6 @@ export type TTelegramLeads = {
 export interface ITelegramLeadsInitState {
 	telegraphLeads: TTelegramLeads[]
 	telegraphLeadsTotal: number
+	telegramChatID: number
+	telegramChatDrawer: boolean
 }

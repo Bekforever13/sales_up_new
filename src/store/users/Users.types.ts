@@ -11,10 +11,10 @@ export interface IUsersInitState {
 	users: TUser[]
 	userDrawer: boolean
 	usersTotal: number
-	userToEdit: TDrawerForm | null
+	userToEdit: TUserDrawerForm | null
 }
 
-export type TDrawerForm = {
+export type TUserDrawerForm = {
 	id?: number
 	name: string
 	phone: string
