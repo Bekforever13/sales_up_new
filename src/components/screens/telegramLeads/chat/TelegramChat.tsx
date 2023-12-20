@@ -18,7 +18,8 @@ const TelegramChat: React.FC = () => {
 		setTelegramChatDrawer(false)
 	}
 
-	const handleSend = () => {
+	const handleSend = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+		e.preventDefault()
 		axiosInstance
 			.post(`/telegraph-chats/${telegramChatID}/messages`, {
 				text: value,
@@ -82,17 +83,21 @@ const TelegramChat: React.FC = () => {
 						)
 					)}
 				</div>
-				<div className='flex items-center w-full'>
+				<form className='flex items-center w-full'>
 					<input
 						ref={inputRef}
 						value={value}
 						onChange={e => setValue(e.target.value)}
 						className='w-full my-1 p-[6px] outline-none text-black dark:text-black'
 					/>
-					<UiButton onClick={handleSend} className='flex items-center'>
+					<UiButton
+						htmlType='submit'
+						onClick={e => handleSend(e)}
+						className='flex items-center'
+					>
 						<BiSend size='22' />
 					</UiButton>
-				</div>
+				</form>
 			</div>
 		</Modal>
 	)
