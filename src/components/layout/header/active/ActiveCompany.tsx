@@ -10,11 +10,12 @@ type TOptions = {
 }
 
 const ActiveCompany: FC = () => {
-	const [activeCompany, setActiveCompany] = useState('')
+	const [activeCompany, setActiveCompany] = useState(0)
 	const [options, setOptions] = useState<TOptions[]>([])
 	const { setFetch } = useActions()
 
 	const handleSelect = (id: number) => {
+		setActiveCompany(id)
 		axiosInstance
 			.patch('/detail', { company_id: id })
 			.then(() => setFetch(Math.random()))
@@ -23,7 +24,7 @@ const ActiveCompany: FC = () => {
 	useEffect(() => {
 		axiosInstance.get('/companies').then(res => {
 			res.data.data.find((el: ICompany) =>
-				el.is_active === true ? setActiveCompany(el.title) : ''
+				el.is_active === true ? setActiveCompany(el.id) : ''
 			)
 			res.data.data.map((el: ICompany) =>
 				setOptions(prev => [...prev, { label: el.title, value: el.id }])

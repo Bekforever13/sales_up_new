@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelectors } from 'src/hooks/useSelectors'
 import { TLeadsProps } from './LeadsTable.types'
-import { TLeads, TLeadsForm } from 'src/store/leads/Leads.types'
+import { TLeadsTable, TLeadsForm } from 'src/store/leads/Leads.types'
 import type { ColumnsType } from 'antd/es/table'
 import UiTable from 'src/components/ui/table/UiTable'
 import { BsPencilSquare } from 'react-icons/bs'
 import { UiButton } from 'src/components/ui'
 import { Delete } from 'src/components/shared'
 import { useActions } from 'src/hooks'
+import { IoTicketOutline } from 'react-icons/io5'
+import { LeadTicketModal } from '../modal/LeadTicketModal'
 
 const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
+	const [currentLead, setCurrentLead] = useState<TLeadsTable>()
+	const [modal, setModal] = useState(false)
 	const { leads, leadsTotal } = useSelectors()
 	const { setLeadsDrawer, setLeadsToEdit } = useActions()
 
@@ -20,7 +24,7 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 		setLeadsToEdit(rec)
 	}
 
-	const columns: ColumnsType<TLeads> = [
+	const columns: ColumnsType<TLeadsTable> = [
 		{
 			title: 'Имя',
 			dataIndex: 'first_name',
@@ -36,7 +40,15 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 		{
 			title: 'Билеты',
 			dataIndex: 'tickets',
-			render: () => <></>
+			render: (_, rec) => (
+				<ul>
+					{rec.tickets.map(el => (
+						<li className='flex items-center gap-5' key={el.id}>
+							{el.name}:<span>{el.quantity} шт</span>
+						</li>
+					))}
+				</ul>
+			),
 		},
 		{
 			title: 'Комментарий',
@@ -54,7 +66,7 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 								last_name: rec.last_name,
 								phone: rec.phone!,
 								id: rec.id,
-								comment: rec.comment,
+								comment: rec.comment!,
 							})
 						}
 					>
@@ -62,6 +74,14 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 					</UiButton>
 					<UiButton>
 						<Delete route='leads' id={rec.id} />
+					</UiButton>
+					<UiButton
+						onClick={() => {
+							setModal(true)
+							setCurrentLead(rec)
+						}}
+					>
+						<IoTicketOutline size='22' />
 					</UiButton>
 				</div>
 			),
@@ -84,6 +104,11 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 				scroll={{ x: true }}
 				size='small'
 				bordered
+			/>
+			<LeadTicketModal
+				modal={modal}
+				setModal={setModal}
+				lead={currentLead ?? null}
 			/>
 		</>
 	)

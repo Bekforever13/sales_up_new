@@ -10,6 +10,10 @@
 	@apply text-black dark:text-white;
 }
 
+li {
+	list-style: none;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
 	-webkit-appearance: none;
@@ -20,9 +24,11 @@ input::-webkit-inner-spin-button {
 	width: 10px;
 	border-radius: 50%;
 }
+
 ::-webkit-scrollbar-track {
 	background: rgba(0, 0, 0, 0.1);
 }
+
 ::-webkit-scrollbar-thumb {
 	background: rgba(0, 0, 0, 0.2);
 }
@@ -51,4 +57,8 @@ input::-webkit-inner-spin-button {
 
 .ant-message-success * {
 	fill: green !important;
+}
+
+.ant-breadcrumb-link * {
+	@apply text-black font-semibold dark:text-white
 }

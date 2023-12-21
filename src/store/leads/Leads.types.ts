@@ -1,3 +1,23 @@
+export type TLeadTicket = {
+	id: number
+	name: string
+	price: number
+	quantity: number
+	created_at: string
+	updated_at: string
+}
+
+export type TLeadsTable = {
+	comment: string | null
+	created_at: string
+	first_name: string
+	id: number
+	last_name: string
+	phone: string
+	tickets: TLeadTicket[]
+	updated_at: string
+}
+
 export type TLeads = {
 	comment: string
 	id: number

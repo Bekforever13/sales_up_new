@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation, Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Breadcrumb, ConfigProvider } from 'antd'
 import { capatilize } from 'src/utils/capitalize'
 import { useSelectors } from 'src/hooks'
@@ -15,26 +15,39 @@ const UiBreadCrumbs: React.FC = () => {
 
 		return (
 			<ConfigProvider theme={{ token: theme }}>
-				<Breadcrumb>
-					{pathnames.length > 0 ? (
-						<Breadcrumb.Item>
-							<Link to='/'>Главная</Link>
-						</Breadcrumb.Item>
-					) : (
-						<Breadcrumb.Item>Главная</Breadcrumb.Item>
-					)}
-					{pathnames.map((name, index) => {
-						const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`
-						const isLast = index === pathnames.length - 1
-						return isLast ? (
-							<Breadcrumb.Item key={index}>{capatilize(name)}</Breadcrumb.Item>
-						) : (
-							<Breadcrumb.Item key={index}>
-								<Link to={`${routeTo}`}>{capatilize(name)}</Link>
-							</Breadcrumb.Item>
-						)
-					})}
-				</Breadcrumb>
+				<Breadcrumb
+					items={[
+						{
+							title: <Link to='/'>Главная</Link>,
+						},
+						...pathnames.map((name, index) => {
+							const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`
+							const kiril = () => {
+								switch (capatilize(name)) {
+									case 'Companies':
+										return 'Компании'
+									case 'Leads':
+										return 'Лиды'
+									case 'Tickets':
+										return 'Билеты'
+									case 'Telegram_leads':
+										return 'Телеграм лиды	'
+									case 'Courses':
+										return 'Курсы'
+									case 'Sources':
+										return 'Источники'
+									case 'Users':
+										return 'Пользователи'
+									default:
+										return capatilize(name)
+								}
+							}
+							return {
+								title: <Link to={routeTo}>{kiril()}</Link>,
+							}
+						}),
+					]}
+				/>
 			</ConfigProvider>
 		)
 	}
