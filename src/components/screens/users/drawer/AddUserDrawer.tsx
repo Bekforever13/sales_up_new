@@ -13,11 +13,15 @@ const roles = [
 
 const AddUserDrawer: React.FC = () => {
 	const { userDrawer, userToEdit } = useSelectors()
-	const { setFetch, setUserDrawer } = useActions()
+	const { setFetch, setUserDrawer, setUserToEdit } = useActions()
 	const theme = localStorage.getItem('theme')
 	const [form] = Form.useForm()
 
-	const onClose = () => setUserDrawer(false)
+	const onClose = () => {
+		setUserToEdit(null)
+		setUserDrawer(false)
+		form.resetFields()
+	}
 
 	const onFinish = (values: TUserDrawerForm) => {
 		userToEdit

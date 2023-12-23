@@ -21,7 +21,7 @@ const LeadsSlice = createSlice({
 		setLeadsDrawer: (state, { payload }: PayloadAction<boolean>) => {
 			state.leadsDrawer = payload
 		},
-		setLeadsToEdit: (state, { payload }: PayloadAction<TLeadsForm>) => {
+		setLeadsToEdit: (state, { payload }: PayloadAction<TLeadsForm | null>) => {
 			state.leadsToEdit = payload
 		},
 	},

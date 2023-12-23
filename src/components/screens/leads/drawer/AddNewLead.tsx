@@ -8,13 +8,14 @@ import { TLeadsForm } from 'src/store/leads/Leads.types'
 
 const AddNewLead: React.FC = () => {
 	const [form] = Form.useForm()
-	const { setFetch, setLeadsDrawer } = useActions()
+	const { setFetch, setLeadsDrawer, setLeadsToEdit } = useActions()
 	const { leadsDrawer, leadsToEdit } = useSelectors()
 	const theme = localStorage.getItem('theme')
 
 	const onClose = () => {
 		setLeadsDrawer(false)
 		form.resetFields()
+		setLeadsToEdit(null)
 	}
 
 	const onFinish = (values: TLeadsForm) => {

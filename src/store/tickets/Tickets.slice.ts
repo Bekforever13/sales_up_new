@@ -21,7 +21,10 @@ const TicketsSlice = createSlice({
 		setTicketsDrawer(state, { payload }: PayloadAction<boolean>) {
 			state.ticketsDrawer = payload
 		},
-		setTicketToEdit(state, { payload }: PayloadAction<TTicketDrawerForm>) {
+		setTicketToEdit(
+			state,
+			{ payload }: PayloadAction<TTicketDrawerForm | null>
+		) {
 			state.ticketsToEdit = payload
 		},
 	},

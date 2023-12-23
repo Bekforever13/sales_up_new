@@ -12,7 +12,6 @@ const LeadsFilters: React.FC<TProps> = props => {
 	return (
 		<UiInput
 			allowClear
-			size='large'
 			placeholder='Введите имя или номер'
 			value={search}
 			style={{ maxWidth: '400px' }}

@@ -17,9 +17,7 @@ const TicketsTable: React.FC<TTicketsProps> = ({ page, setPage }) => {
 	const handleChangePage = (event: number) => setPage(event)
 
 	const handleDelete = (id: number) => {
-		axiosInstance
-			.delete(`/tickets/${id}`)
-			.then(() => setFetch(Math.random()))
+		axiosInstance.delete(`/tickets/${id}`).then(() => setFetch(Math.random()))
 	}
 
 	const handleEdit = (rec: TTicket) => {
@@ -39,7 +37,7 @@ const TicketsTable: React.FC<TTicketsProps> = ({ page, setPage }) => {
 		{
 			title: 'Цена',
 			dataIndex: 'price',
-			render: el => el.toString().replace(/\d{3}(?=\d)/g, '$&\n'),
+			render: el => <>{el.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} сум</>,
 		},
 		{
 			title: 'Действия',

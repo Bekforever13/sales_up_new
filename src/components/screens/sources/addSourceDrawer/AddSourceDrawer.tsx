@@ -4,13 +4,17 @@ import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 
 const AddSourceDrawer: React.FC = () => {
-	const { setFetch, setSourceDrawer } = useActions()
+	const { setFetch, setSourceDrawer, setSourceToEdit } = useActions()
 	const { sourceDrawer } = useSelectors()
 	const [newSource, setNewSource] = useState({
 		title: '',
 	})
 
-	const onClose = () => setSourceDrawer(false)
+	const onClose = () => {
+		setSourceDrawer(false)
+		setSourceToEdit(null)
+		setNewSource({ title: '' })
+	}
 
 	const onSubmit = () => {
 		axiosInstance.post('/sources', newSource).finally(() => {

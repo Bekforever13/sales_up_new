@@ -19,13 +19,13 @@ const SourcesSlice = createSlice({
 		setSourcesTotal(state, { payload }: PayloadAction<number>) {
 			state.sourcesTotal = payload
 		},
-		setSourceToEdit(state, { payload }: PayloadAction<TSource>) {
+		setSourceToEdit(state, { payload }: PayloadAction<TSource | null>) {
 			state.sourceToEdit = payload
 		},
 		setSourceDrawer(state, { payload }: PayloadAction<boolean>) {
 			state.sourceDrawer = payload
 		},
-		setSourceInfoEdit(state, { payload }: PayloadAction<TLinkEditForm>) {
+		setSourceInfoEdit(state, { payload }: PayloadAction<TLinkEditForm | null>) {
 			state.sourceInfoEdit = payload
 		},
 	},

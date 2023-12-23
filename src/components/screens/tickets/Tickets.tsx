@@ -28,9 +28,11 @@ const Tickets: React.FC = () => {
 	return (
 		<Spin spinning={loading}>
 			<div className='text-black dark:text-white bg-[#ececec] dark:bg-slate-600 p-5 rounded-xl flex flex-col gap-y-5'>
-				<UiButton className='w-fit' onClick={() => setTicketsDrawer(true)}>
-					Добавить
-				</UiButton>
+				<div className='flex justify-end'>
+					<UiButton className='w-fit' onClick={() => setTicketsDrawer(true)}>
+						Добавить
+					</UiButton>
+				</div>
 				<TicketDrawer />
 				<TicketsTable page={page} setPage={setPage} />
 			</div>

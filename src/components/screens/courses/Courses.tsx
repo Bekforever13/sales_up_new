@@ -29,10 +29,10 @@ const Courses: React.FC = () => {
 
 	return (
 		<div className='text-black dark:text-white bg-[#ececec] dark:bg-slate-600 p-5 rounded-xl flex flex-col gap-y-5'>
-			<div className='w-fit'>
-				<UiButton onClick={showDrawer}>Добавить</UiButton>
-				<AddCourseDrawer />
+			<div className='flex justify-end'>
+				<UiButton className='w-fit' onClick={showDrawer}>Добавить</UiButton>
 			</div>
+			<AddCourseDrawer />
 			<Spin spinning={loading}>
 				<CoursesTable page={page} setPage={setPage} />
 			</Spin>

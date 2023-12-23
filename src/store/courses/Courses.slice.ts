@@ -18,7 +18,7 @@ const Courses = createSlice({
 		setCoursesTotal(state, { payload }: PayloadAction<number>) {
 			state.coursesTotal = payload
 		},
-		setCourseToEdit(state, { payload }: PayloadAction<TCourse>) {
+		setCourseToEdit(state, { payload }: PayloadAction<TCourse | null>) {
 			state.courseToEdit = payload
 		},
 		setCourseDrawer(state, { payload }: PayloadAction<boolean>) {

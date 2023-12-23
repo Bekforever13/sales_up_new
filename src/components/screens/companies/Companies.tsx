@@ -28,9 +28,11 @@ const Companies: React.FC = () => {
 	return (
 		<Spin spinning={loading}>
 			<div className='text-black dark:text-white bg-[#ececec] dark:bg-slate-600 p-5 rounded-xl flex flex-col gap-y-5'>
-				<UiButton onClick={() => setCompaniesDrawer(true)} className='w-fit'>
-					Добавить
-				</UiButton>
+				<div className='flex justify-end'>
+					<UiButton onClick={() => setCompaniesDrawer(true)} className='w-fit'>
+						Добавить
+					</UiButton>
+				</div>
 				<AddCompanyDrawer />
 				<CompaniesTable page={page} setPage={setPage} />
 			</div>

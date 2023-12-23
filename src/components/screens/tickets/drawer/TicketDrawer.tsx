@@ -7,23 +7,27 @@ import { TTicketDrawerForm } from 'src/store/tickets/Tickets.types'
 
 const TicketDrawer: React.FC = () => {
 	const { ticketsDrawer, ticketsToEdit } = useSelectors()
-	const { setFetch, setTicketsDrawer } = useActions()
+	const { setFetch, setTicketsDrawer, setTicketToEdit } = useActions()
 	const [form] = Form.useForm()
 
-	const onClose = () => setTicketsDrawer(false)
+	const onClose = () => {
+		setTicketsDrawer(false)
+		setTicketToEdit(null)
+		form.resetFields()
+	}
 
 	const onFinish = (values: TTicketDrawerForm) => {
-		ticketsToEdit
+		ticketsToEdit?.id
 			? axiosInstance.put(`/tickets/${ticketsToEdit.id}`, values).then(() => {
 					setTicketsDrawer(false)
 					form.resetFields()
 					setFetch(Math.random())
-			})
+			  })
 			: axiosInstance.post('/tickets', values).then(() => {
 					setTicketsDrawer(false)
 					form.resetFields()
 					setFetch(Math.random())
-			})
+			  })
 	}
 
 	useEffect(() => {
@@ -60,9 +64,14 @@ const TicketDrawer: React.FC = () => {
 				<Form.Item
 					name='price'
 					label='Цена'
-					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
+					rules={[
+						{
+							required: true,
+							message: 'Пожалуйста, заполните поле.',
+						},
+					]}
 				>
-					<UiInput placeholder='Цена' />
+					<UiInput type='number' placeholder='Цена' />
 				</Form.Item>
 				<UiButton type='primary' htmlType='submit'>
 					Подтвердить

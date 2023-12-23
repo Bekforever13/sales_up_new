@@ -21,7 +21,7 @@ const UsersSlice = createSlice({
 		setUserDrawer(state, { payload }: PayloadAction<boolean>) {
 			state.userDrawer = payload
 		},
-		setUserToEdit(state, { payload }: PayloadAction<TUserDrawerForm>) {
+		setUserToEdit(state, { payload }: PayloadAction<TUserDrawerForm | null>) {
 			state.userToEdit = payload
 		},
 	},

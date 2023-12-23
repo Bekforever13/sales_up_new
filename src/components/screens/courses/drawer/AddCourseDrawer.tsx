@@ -4,14 +4,21 @@ import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 
 const AddCourseDrawer: React.FC = () => {
-	const { setFetch, setCourseDrawer } = useActions()
+	const { setFetch, setCourseDrawer, setCourseToEdit } = useActions()
 	const { courseDrawer } = useSelectors()
 	const [newCourse, setNewСourse] = useState({
 		title: '',
 		description: '',
 	})
 
-	const onClose = () => setCourseDrawer(false)
+	const onClose = () => {
+		setCourseToEdit(null)
+		setCourseDrawer(false)
+		setNewСourse({
+			title: '',
+			description: '',
+		})
+	}
 
 	const onSubmit = () => {
 		axiosInstance.post('/courses', newCourse).then(() => {

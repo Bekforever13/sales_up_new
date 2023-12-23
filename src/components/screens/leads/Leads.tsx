@@ -38,9 +38,7 @@ const Leads: React.FC = () => {
 			<div className='text-black dark:text-white bg-[#ececec] dark:bg-slate-600 p-5 rounded-xl flex flex-col gap-y-5'>
 				<div className='flex items-center justify-between'>
 					<LeadsFilters search={search} setSearch={setSearch} />
-					<UiButton onClick={() => setLeadsDrawer(true)} size='large'>
-						Добавить
-					</UiButton>
+					<UiButton onClick={() => setLeadsDrawer(true)}>Добавить</UiButton>
 					<AddNewLead />
 				</div>
 				<LeadsTable page={page} setPage={setPage} />
