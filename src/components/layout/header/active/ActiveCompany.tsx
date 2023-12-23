@@ -23,11 +23,11 @@ const ActiveCompany: FC = () => {
 
 	useEffect(() => {
 		axiosInstance.get('/companies').then(res => {
-			res.data.data.find((el: ICompany) =>
-				el.is_active === true ? setActiveCompany(el.id) : ''
-			)
 			res.data.data.map((el: ICompany) =>
 				setOptions(prev => [...prev, { label: el.title, value: el.id }])
+			)
+			res.data.data.find((el: ICompany) =>
+				el.is_active === true ? setActiveCompany(el.id) : ''
 			)
 		})
 	}, [])

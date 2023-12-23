@@ -12,7 +12,7 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 	modal,
 	setModal,
 }) => {
-	const { setTickets, setTicketsTotal, setFetch } = useActions()
+	const { setTickets, setFetch } = useActions()
 	const { fetch, tickets } = useSelectors()
 	const [newData, setNewData] = useState<LeadTicketForm[]>([])
 
@@ -21,6 +21,7 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 	}
 
 	const handleDecrement = (id: number) => {
+		// decrement quantity of ticket to -1
 		const updatedData = newData.map(item => {
 			if (item.id === id) {
 				return {
@@ -34,6 +35,7 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 	}
 
 	const handleIncrement = (id: number) => {
+		// increment quantity of ticket to +1
 		const updatedData = newData.map(item => {
 			if (item.id === id) {
 				return {
@@ -50,6 +52,7 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 		axiosInstance
 			.post(`/leads/${lead?.id}/tickets`, { tickets: newData })
 			.then(() => {
+				// close modal, change fetch to refetch all tables, clear state
 				setModal(false)
 				setFetch(Math.random())
 				setNewData([])
@@ -57,9 +60,9 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 	}
 
 	useEffect(() => {
+		// if modal open we get tickets
 		if (modal) {
 			axiosInstance.get('/tickets').then(res => {
-				setTicketsTotal(res.data.total)
 				setTickets(res.data.data)
 				res.data.data.map((ticket: TTicket) => {
 					setNewData(prev => [
@@ -67,6 +70,7 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 						{
 							id: ticket.id,
 							quantity:
+								// change quantity of ticket from our newData state. it will change to lead's quantity of this ticket
 								lead?.tickets?.find(el => el.id === ticket.id)?.quantity ?? 0,
 						},
 					])
@@ -74,6 +78,7 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 			})
 		}
 		if (!modal) {
+			// if modal closed we clear state, if we don't clear it will be crashed
 			setNewData([])
 		}
 	}, [fetch, modal])
@@ -85,6 +90,7 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 			onCancel={handleCancel}
 			footer={false}
 		>
+			{/* mapping all tickets */}
 			{tickets?.map(ticket => {
 				return (
 					<div
@@ -105,7 +111,8 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 							>
 								<FaMinus size='18' />
 							</UiButton>
-							<div className='w-16 bg-blue-600 p-1 rounded-lg flex items-center justify-center select-none'>
+							<div className='w-16 bg-blue-600 p-1 rounded-lg flex items-center justify-center select-none text-white dark:text-white'>
+								{/* this will display lead's quantity of ticket */}
 								{newData?.find(item => item.id === ticket.id)?.quantity}
 							</div>
 							<UiButton
