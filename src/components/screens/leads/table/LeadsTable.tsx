@@ -10,12 +10,19 @@ import { Delete } from 'src/components/shared'
 import { useActions } from 'src/hooks'
 import { IoTicketOutline } from 'react-icons/io5'
 import { LeadTicketModal } from '../modal/LeadTicketModal'
+import { MdOutlineTextsms } from 'react-icons/md'
+import { TelegramChat } from '../chat/TelegramChat'
 
 const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 	const [currentLead, setCurrentLead] = useState<TLeadsTable>()
 	const [modal, setModal] = useState(false)
 	const { leads, leadsTotal } = useSelectors()
-	const { setLeadsDrawer, setLeadsToEdit } = useActions()
+	const {
+		setLeadsDrawer,
+		setLeadsToEdit,
+		setTelegramChatDrawer,
+		setTelegramChatID,
+	} = useActions()
 
 	const handleChangePage = (event: number) => setPage(event)
 
@@ -83,6 +90,15 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 					>
 						<IoTicketOutline size='22' />
 					</UiButton>
+					<UiButton className='cursor-pointer'>
+						<MdOutlineTextsms
+							size='22'
+							onClick={() => {
+								setTelegramChatID(rec.telegraph_chat_id)
+								setTelegramChatDrawer(true)
+							}}
+						/>
+					</UiButton>
 				</div>
 			),
 		},
@@ -110,6 +126,7 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 				setModal={setModal}
 				lead={currentLead ?? null}
 			/>
+			<TelegramChat />
 		</>
 	)
 }

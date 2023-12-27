@@ -7,7 +7,6 @@
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Montserrat', sans-serif;
-	@apply text-black dark:text-white;
 }
 
 li {
@@ -31,20 +30,6 @@ input::-webkit-inner-spin-button {
 
 ::-webkit-scrollbar-thumb {
 	background: rgba(0, 0, 0, 0.2);
-}
-
-.app {
-	background-color: var(--clr-bg);
-
-	&.light {
-		--clr-bg: #fff;
-		--clr-text: #000;
-	}
-
-	&.dark {
-		--clr-bg: #000;
-		--clr-text: #fff;
-	}
 }
 
 .ant-btn-primary * {

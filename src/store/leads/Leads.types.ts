@@ -14,6 +14,7 @@ export type TLeadsTable = {
 	id: number
 	last_name: string
 	phone: string
+	telegraph_chat_id: number
 	tickets: TLeadTicket[]
 	updated_at: string
 }

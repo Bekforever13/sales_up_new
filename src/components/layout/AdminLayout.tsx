@@ -14,7 +14,7 @@ const AdminLayout: React.FC = () => {
 	}, [])
 
 	return (
-		<div className='flex bg-[#fff] dark:bg-slate-700'>
+		<div className='flex bg-[#fff] dark:bg-slate-700 text-black dark:text-white'>
 			<Navbar />
 			<main className='py-5 pr-5 pl-[220px] w-full flex flex-col gap-y-7 min-h-screen'>
 				<Header />
