@@ -67,13 +67,13 @@ const AddNewLead: React.FC = () => {
 					name='first_name'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
-					<UiInput placeholder='Название...' />
+					<UiInput placeholder='Имя...' />
 				</Form.Item>
 				<Form.Item
 					name='last_name'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
-					<UiInput placeholder='Описание...' />
+					<UiInput placeholder='Фамилия...' />
 				</Form.Item>
 				<Form.Item
 					name='phone'
