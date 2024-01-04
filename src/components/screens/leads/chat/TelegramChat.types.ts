@@ -3,4 +3,5 @@ export type TMessage = {
 	id: number
 	is_answer: boolean
 	text: string
+	file_url: string
 }

@@ -130,19 +130,39 @@ const TelegramChat: FC = () => {
 				closeIcon={<IoMdCloseCircleOutline />}
 			>
 				<div className='h-[500px] flex flex-col overflow-y-auto p-5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-t-lg w-full'>
-					<div className='flex-1 mb-2'>
+					<div className='w-full flex-1 mb-2 flex flex-col gap-y-2'>
 						{messages?.map((el, i) =>
 							el.is_answer === false ? (
-								<p key={i} className='py-2 w-full text-left rounded-3xl'>
-									<span className='bg-indigo-500 rounded-tr-3xl rounded-br-3xl rounded-tl-3xl p-2 text-white dark:text-white'>
-										{el.text}
-									</span>
+								<p
+									key={i}
+									className='py-2 w-fit text-left bg-indigo-500 rounded-tr-3xl rounded-br-3xl rounded-tl-3xl p-2 text-white dark:text-white'
+								>
+									{el.text !== null && <span>{el.text}</span>}
+									{el.file_url !== '' && (
+										<a
+											target='_blank'
+											href={el.file_url}
+											className='text-blue-400 underline'
+										>
+											Файл
+										</a>
+									)}
 								</p>
 							) : (
-								<p key={el.id} className='py-2 w-full text-right rounded-3xl'>
-									<span className='bg-indigo-500 rounded-tr-3xl rounded-bl-3xl rounded-tl-3xl p-2 text-white dark:text-white'>
-										{el.text}
-									</span>
+								<p
+									key={el.id}
+									className='py-2 w-fit self-end text-right flex flex-col bg-indigo-500 rounded-tr-3xl rounded-bl-3xl rounded-tl-3xl p-2 text-white dark:text-white'
+								>
+									{el.text !== null && <span>{el.text}</span>}
+									{el.file_url !== '' && (
+										<a
+											target='_blank'
+											href={el.file_url}
+											className='text-blue-400 underline'
+										>
+											Файл
+										</a>
+									)}
 								</p>
 							)
 						)}
