@@ -16,7 +16,7 @@ const TelegramChat: FC = () => {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null)
 	const [messages, setMessages] = useState<TMessage[]>([])
 
-	Pusher.logToConsole = false
+	Pusher.logToConsole = true
 	let pusher = new Pusher('720c4842f035545b5048', { cluster: 'eu' })
 
 	const handleCancel = () => setTelegramChatDrawer(false)
@@ -131,7 +131,7 @@ const TelegramChat: FC = () => {
 							el.is_answer === false ? (
 								<p
 									key={i}
-									className='py-2 w-fit text-left bg-indigo-500 rounded-tr-3xl rounded-br-3xl rounded-tl-3xl p-2 text-white dark:text-white'
+									className='w-fit text-left flex flex-col bg-indigo-500 rounded-tr-3xl rounded-br-3xl rounded-tl-3xl p-3 text-white dark:text-white'
 								>
 									{el.text !== null && <span>{el.text}</span>}
 									{el.file_url !== '' && (
@@ -143,11 +143,14 @@ const TelegramChat: FC = () => {
 											Файл
 										</a>
 									)}
+									<span className='text-xs text-yellow-300'>
+										{el.created_at}
+									</span>
 								</p>
 							) : (
 								<p
 									key={el.id}
-									className='py-2 w-fit self-end text-right flex flex-col bg-indigo-500 rounded-tr-3xl rounded-bl-3xl rounded-tl-3xl p-2 text-white dark:text-white'
+									className=' w-fit self-end text-right flex flex-col bg-indigo-500 rounded-tr-3xl rounded-bl-3xl rounded-tl-3xl p-3 text-white dark:text-white'
 								>
 									{el.text !== null && <span>{el.text}</span>}
 									{el.file_url !== '' && (
@@ -159,6 +162,9 @@ const TelegramChat: FC = () => {
 											Файл
 										</a>
 									)}
+									<span className='text-xs text-yellow-300'>
+										{el.created_at}
+									</span>
 								</p>
 							)
 						)}
