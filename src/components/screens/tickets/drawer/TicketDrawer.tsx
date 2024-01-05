@@ -1,4 +1,4 @@
-import { Form } from 'antd'
+import { Form, message } from 'antd'
 import React, { useEffect } from 'react'
 import { UiButton, UiDrawer, UiInput } from 'src/components/ui'
 import { useActions, useSelectors } from 'src/hooks'
@@ -9,6 +9,7 @@ const TicketDrawer: React.FC = () => {
 	const { ticketsDrawer, ticketsToEdit } = useSelectors()
 	const { setFetch, setTicketsDrawer, setTicketToEdit } = useActions()
 	const [form] = Form.useForm()
+	const [isButtonDisabled, setButtonDisabled] = React.useState(false)
 
 	const onClose = () => {
 		setTicketsDrawer(false)
@@ -17,18 +18,33 @@ const TicketDrawer: React.FC = () => {
 	}
 
 	const onFinish = (values: TTicketDrawerForm) => {
+		setButtonDisabled(true)
 		ticketsToEdit?.id
 			? axiosInstance.put(`/tickets/${ticketsToEdit.id}`, values).then(() => {
 					setTicketsDrawer(false)
 					form.resetFields()
 					setFetch(Math.random())
+					message.success('Успешно')
 			  })
 			: axiosInstance.post('/tickets', values).then(() => {
 					setTicketsDrawer(false)
 					form.resetFields()
 					setFetch(Math.random())
+					message.success('Успешно')
 			  })
 	}
+
+	React.useEffect(() => {
+		let timer: ReturnType<typeof setTimeout>
+		if (isButtonDisabled) {
+			timer = setTimeout(() => {
+				setButtonDisabled(false)
+			}, 2000)
+		}
+		return () => {
+			clearTimeout(timer)
+		}
+	}, [isButtonDisabled])
 
 	useEffect(() => {
 		if (ticketsToEdit) {
@@ -67,13 +83,14 @@ const TicketDrawer: React.FC = () => {
 					rules={[
 						{
 							required: true,
+							max: 16000000,
 							message: 'Пожалуйста, заполните поле.',
 						},
 					]}
 				>
 					<UiInput type='number' placeholder='Цена' />
 				</Form.Item>
-				<UiButton type='primary' htmlType='submit'>
+				<UiButton loading={isButtonDisabled} type='primary' htmlType='submit'>
 					Подтвердить
 				</UiButton>
 			</Form>

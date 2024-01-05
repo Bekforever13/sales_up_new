@@ -1,4 +1,4 @@
-import { Form } from 'antd'
+import { Form, message } from 'antd'
 import { MaskedInput } from 'antd-mask-input'
 import React, { useEffect } from 'react'
 import { UiButton, UiDrawer, UiInput, UiSelect } from 'src/components/ui'
@@ -16,6 +16,7 @@ const AddUserDrawer: React.FC = () => {
 	const { setFetch, setUserDrawer, setUserToEdit } = useActions()
 	const theme = localStorage.getItem('theme')
 	const [form] = Form.useForm()
+	const [isButtonDisabled, setButtonDisabled] = React.useState(false)
 
 	const onClose = () => {
 		setUserToEdit(null)
@@ -24,6 +25,7 @@ const AddUserDrawer: React.FC = () => {
 	}
 
 	const onFinish = (values: TUserDrawerForm) => {
+		setButtonDisabled(true)
 		userToEdit
 			? axiosInstance
 					.put(`/admin/users/${userToEdit.id}`, {
@@ -34,6 +36,7 @@ const AddUserDrawer: React.FC = () => {
 					})
 					.then(() => {
 						setUserDrawer(false)
+						message.success('Успешно')
 						form.resetFields()
 						setFetch(Math.random())
 					})
@@ -46,8 +49,21 @@ const AddUserDrawer: React.FC = () => {
 						setUserDrawer(false)
 						form.resetFields()
 						setFetch(Math.random())
+						message.success('Успешно')
 					})
 	}
+
+	React.useEffect(() => {
+		let timer: ReturnType<typeof setTimeout>
+		if (isButtonDisabled) {
+			timer = setTimeout(() => {
+				setButtonDisabled(false)
+			}, 2000)
+		}
+		return () => {
+			clearTimeout(timer)
+		}
+	}, [isButtonDisabled])
 
 	useEffect(() => {
 		if (userToEdit) {
@@ -110,7 +126,11 @@ const AddUserDrawer: React.FC = () => {
 				>
 					<UiSelect placeholder='Выберите роль' options={roles} />
 				</Form.Item>
-				<UiButton type='primary' htmlType='submit'>
+				<UiButton
+					loading={isButtonDisabled}
+					type='primary'
+					htmlType='submit'
+				>
 					Подтвердить
 				</UiButton>
 			</Form>

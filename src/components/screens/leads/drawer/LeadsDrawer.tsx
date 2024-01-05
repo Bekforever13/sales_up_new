@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
-import { Form } from 'antd'
+import { Form, message } from 'antd'
 import { MaskedInput } from 'antd-mask-input'
 import { UiButton, UiDrawer, UiInput } from 'src/components/ui'
 import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 import { TLeadsForm } from 'src/store/leads/Leads.types'
 
-const AddNewLead: React.FC = () => {
+const LeadsDrawer: React.FC = () => {
 	const [form] = Form.useForm()
 	const { setFetch, setLeadsDrawer, setLeadsToEdit } = useActions()
 	const { leadsDrawer, leadsToEdit } = useSelectors()
 	const theme = localStorage.getItem('theme')
+	const [isButtonDisabled, setButtonDisabled] = React.useState(false)
 
 	const onClose = () => {
 		setLeadsDrawer(false)
@@ -19,6 +20,7 @@ const AddNewLead: React.FC = () => {
 	}
 
 	const onFinish = (values: TLeadsForm) => {
+		setButtonDisabled(true)
 		leadsToEdit
 			? axiosInstance
 					.put(`/leads/${leadsToEdit.id}`, {
@@ -27,22 +29,41 @@ const AddNewLead: React.FC = () => {
 						phone: `+${values.phone.replace(/\D/g, '')}`,
 						comment: values.comment,
 					})
-					.then(() => {
-						setLeadsDrawer(false)
-						form.resetFields()
-						setFetch(Math.random())
+					.then(res => {
+						if (res.status === 200) {
+							setLeadsDrawer(false)
+							form.resetFields()
+							setFetch(Math.random())
+							message.success('Успешно')
+						}
 					})
 			: axiosInstance
 					.post('/leads', {
 						...values,
 						phone: `+${values.phone.replace(/\D/g, '')}`,
 					})
-					.then(() => {
-						setLeadsDrawer(false)
-						form.resetFields()
-						setFetch(Math.random())
+					.then(res => {
+						if (res.status === 201) {
+							setLeadsDrawer(false)
+							form.resetFields()
+							setFetch(Math.random())
+							message.success('Успешно')
+						}
 					})
+					.catch(() => message.error('Данный телефон уже зарегистрирован'))
 	}
+
+	React.useEffect(() => {
+		let timer: ReturnType<typeof setTimeout>
+		if (isButtonDisabled) {
+			timer = setTimeout(() => {
+				setButtonDisabled(false)
+			}, 2000)
+		}
+		return () => {
+			clearTimeout(timer)
+		}
+	}, [isButtonDisabled])
 
 	useEffect(() => {
 		if (leadsToEdit) {
@@ -94,7 +115,7 @@ const AddNewLead: React.FC = () => {
 					</Form.Item>
 				)}
 				<Form.Item>
-					<UiButton type='primary' htmlType='submit'>
+					<UiButton type='primary' loading={isButtonDisabled} htmlType='submit'>
 						Подтвердить
 					</UiButton>
 				</Form.Item>
@@ -103,4 +124,4 @@ const AddNewLead: React.FC = () => {
 	)
 }
 
-export { AddNewLead }
+export { LeadsDrawer }

@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import React, { useState } from 'react'
 import { UiButton, UiDrawer, UiInput } from 'src/components/ui'
 import { useActions, useSelectors } from 'src/hooks'
@@ -6,6 +7,7 @@ import { axiosInstance } from 'src/services/axiosInstance'
 const AddCourseDrawer: React.FC = () => {
 	const { setFetch, setCourseDrawer, setCourseToEdit } = useActions()
 	const { courseDrawer } = useSelectors()
+	const [isButtonDisabled, setButtonDisabled] = React.useState(false)
 	const [newCourse, setNewСourse] = useState({
 		title: '',
 		description: '',
@@ -21,8 +23,10 @@ const AddCourseDrawer: React.FC = () => {
 	}
 
 	const onSubmit = () => {
+		setButtonDisabled(true)
 		axiosInstance.post('/courses', newCourse).then(() => {
 			setCourseDrawer(false)
+			message.success('Успешно')
 			setNewСourse({
 				title: '',
 				description: '',
@@ -30,6 +34,18 @@ const AddCourseDrawer: React.FC = () => {
 			setFetch(Math.random())
 		})
 	}
+
+	React.useEffect(() => {
+		let timer: ReturnType<typeof setTimeout>
+		if (isButtonDisabled) {
+			timer = setTimeout(() => {
+				setButtonDisabled(false)
+			}, 2000)
+		}
+		return () => {
+			clearTimeout(timer)
+		}
+	}, [isButtonDisabled])
 
 	return (
 		<UiDrawer
@@ -54,7 +70,9 @@ const AddCourseDrawer: React.FC = () => {
 					setNewСourse({ ...newCourse, description: e.target.value })
 				}
 			/>
-			<UiButton onClick={onSubmit}>Добавить</UiButton>
+			<UiButton loading={isButtonDisabled} onClick={onSubmit}>
+				Добавить
+			</UiButton>
 		</UiDrawer>
 	)
 }

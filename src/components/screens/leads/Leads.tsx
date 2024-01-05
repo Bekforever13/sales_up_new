@@ -7,7 +7,7 @@ import { Spin } from 'antd'
 import { useActions } from 'src/hooks/useActions'
 import { useSelectors } from 'src/hooks'
 import { UiButton } from 'src/components/ui'
-import { AddNewLead } from './drawer/AddNewLead'
+import { LeadsDrawer } from './drawer/LeadsDrawer'
 
 const Leads: React.FC = () => {
 	const [loading, setLoading] = useState(false)
@@ -39,7 +39,7 @@ const Leads: React.FC = () => {
 				<div className='flex items-center justify-between'>
 					<LeadsFilters search={search} setSearch={setSearch} />
 					<UiButton onClick={() => setLeadsDrawer(true)}>Добавить</UiButton>
-					<AddNewLead />
+					<LeadsDrawer />
 				</div>
 				<LeadsTable page={page} setPage={setPage} />
 			</div>

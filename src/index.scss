@@ -44,6 +44,10 @@ input::-webkit-inner-spin-button {
 	fill: green !important;
 }
 
+.ant-message-error * {
+	fill: red !important;
+}
+
 .ant-breadcrumb-link * {
 	@apply text-black font-semibold dark:text-white
 }

@@ -3,15 +3,14 @@ import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { formatPhone } from 'src/utils/shared'
 import { ILoginDataBody } from './Auth.types'
-import { useActions } from 'src/hooks/useActions'
 import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from 'src/services/axiosInstance'
 import { FaEyeSlash, FaEye } from 'react-icons/fa'
+import { message } from 'antd'
 
 const Auth: React.FC = () => {
 	const [showPassword, setShowPassword] = React.useState(false)
 	const [isButtonDisabled, setButtonDisabled] = React.useState(false)
-	const { setAuth } = useActions()
 	const navigate = useNavigate()
 	const token = localStorage.getItem('token')
 
@@ -32,19 +31,18 @@ const Auth: React.FC = () => {
 				phone: formatPhone('+' + values.phone),
 			})
 			.then(res => {
-				setAuth(true)
-				localStorage.setItem('token', 'Bearer ' + res.data.data.access_token)
+				if (res.status === 200) {
+					localStorage.setItem('token', 'Bearer ' + res.data.data.access_token)
+					navigate('/')
+					message.success('Добро пожаловать!')
+				}
 			})
-			.catch(e => console.log(e.response))
-			.finally(() => navigate('/'))
+			.catch(e => message.error(e.response.data.message))
 	}
 
 	React.useEffect(() => {
 		if (token) {
-			axiosInstance.get('/auth/user').then(() => {
-				setAuth(true)
-				navigate('/', { replace: true })
-			})
+			navigate('/')
 		}
 	}, [token])
 
@@ -53,7 +51,7 @@ const Auth: React.FC = () => {
 		if (isButtonDisabled) {
 			timer = setTimeout(() => {
 				setButtonDisabled(false)
-			}, 3000)
+			}, 2000)
 		}
 		return () => {
 			clearTimeout(timer)

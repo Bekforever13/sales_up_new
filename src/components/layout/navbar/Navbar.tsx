@@ -3,15 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { LuListOrdered } from 'react-icons/lu'
 import { NavbarMenu } from './NavbarMenu'
 import { UiPopconfirm } from 'src/components/ui'
-import { useActions } from 'src/hooks'
 
 const Navbar: React.FC = () => {
 	const navigate = useNavigate()
-	const { setAuth } = useActions()
 
 	const onConfirm = () => {
 		localStorage.removeItem('token')
-		setAuth(false)
 		navigate('/auth')
 	}
 

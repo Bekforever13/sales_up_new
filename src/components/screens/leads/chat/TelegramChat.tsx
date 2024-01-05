@@ -16,19 +16,15 @@ const TelegramChat: FC = () => {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null)
 	const [messages, setMessages] = useState<TMessage[]>([])
 
-	Pusher.logToConsole = true
-	let pusher = new Pusher('720c4842f035545b5048', {
-		cluster: 'eu',
-	})
+	Pusher.logToConsole = false
+	let pusher = new Pusher('720c4842f035545b5048', { cluster: 'eu' })
 
-	const handleCancel = () => {
-		setTelegramChatDrawer(false)
-	}
+	const handleCancel = () => setTelegramChatDrawer(false)
 
 	const handleRemoveFile = () => {
 		const fileInput = document.getElementById('fileInput') as HTMLInputElement
-		fileInput.value = '' // Сбросить значение input
-		setSelectedFile(null) // Установить значение файла в стейте как null
+		fileInput.value = ''
+		setSelectedFile(null)
 	}
 
 	const handlePaperclipClick = () => {
