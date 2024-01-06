@@ -37,9 +37,7 @@ const AddSourceDrawer: React.FC = () => {
 				setButtonDisabled(false)
 			}, 2000)
 		}
-		return () => {
-			clearTimeout(timer)
-		}
+		return () => clearTimeout(timer)
 	}, [isButtonDisabled])
 
 	return (

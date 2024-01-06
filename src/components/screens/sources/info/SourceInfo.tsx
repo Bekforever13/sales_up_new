@@ -7,14 +7,17 @@ import type { ColumnsType } from 'antd/es/table'
 import UiTable from 'src/components/ui/table/UiTable'
 import { TLink } from 'src/store/sources/Sources.types'
 import { useActions, useSelectors } from 'src/hooks'
+import { Spin } from 'antd'
+import { SourceInfoDrawer } from './drawer/SourceInfoDrawer'
 
 const SourceInfo: React.FC = () => {
 	const { id } = useParams()
-	const { setSourceInfoEdit } = useActions()
+	const { setSourceInfoEdit, setSourceInfoDrawer } = useActions()
 	const { fetch } = useSelectors()
 	const [total, setTotal] = useState(10)
 	const [page, setPage] = useState(1)
 	const [data, setData] = useState([])
+	const [loading, setLoading] = useState(false)
 
 	const columns: ColumnsType<TLink> = [
 		{
@@ -69,28 +72,42 @@ const SourceInfo: React.FC = () => {
 	]
 
 	useEffect(() => {
-		axiosInstance.get(`/sources/${id}/links`).then(res => {
-			setTotal(res.data.total)
-			setData(res.data.data)
-		})
+		setLoading(true)
+		axiosInstance
+			.get(`/sources/${id}/links`)
+			.then(res => {
+				setTotal(res.data.total)
+				setData(res.data.data)
+			})
+			.finally(() => setLoading(false))
 	}, [id, fetch])
 
 	return (
-		<UiTable
-			columns={columns}
-			dataSource={data}
-			pagination={{
-				total: total,
-				current: page,
-				showSizeChanger: false,
-				defaultPageSize: 10,
-				onChange: e => setPage(e),
-			}}
-			rowKey={e => e.id}
-			scroll={{ x: true }}
-			size='small'
-			bordered
-		/>
+		<Spin spinning={loading}>
+			<div className='text-black dark:text-white bg-[#ececec] dark:bg-slate-600 p-5 rounded-xl flex flex-col gap-y-5'>
+				<div className='flex justify-end'>
+					<UiButton onClick={() => setSourceInfoDrawer(true)}>
+						Добавить
+					</UiButton>
+				</div>
+				<UiTable
+					columns={columns}
+					dataSource={data}
+					pagination={{
+						total: total,
+						current: page,
+						showSizeChanger: false,
+						defaultPageSize: 10,
+						onChange: e => setPage(e),
+					}}
+					rowKey={e => e.id}
+					scroll={{ x: true }}
+					size='small'
+					bordered
+				/>
+				<SourceInfoDrawer />
+			</div>
+		</Spin>
 	)
 }
 

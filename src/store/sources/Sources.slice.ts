@@ -7,6 +7,7 @@ const initialState: ISourceInitState = {
 	sourceToEdit: null,
 	sourceDrawer: false,
 	sourceInfoEdit: null,
+	sourceInfoDrawer: false,
 }
 
 const SourcesSlice = createSlice({
@@ -27,6 +28,9 @@ const SourcesSlice = createSlice({
 		},
 		setSourceInfoEdit(state, { payload }: PayloadAction<TLinkEditForm | null>) {
 			state.sourceInfoEdit = payload
+		},
+		setSourceInfoDrawer(state, { payload }: PayloadAction<boolean>) {
+			state.sourceInfoDrawer = payload
 		},
 	},
 })

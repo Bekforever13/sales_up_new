@@ -60,9 +60,7 @@ const AddUserDrawer: React.FC = () => {
 				setButtonDisabled(false)
 			}, 2000)
 		}
-		return () => {
-			clearTimeout(timer)
-		}
+		return () => clearTimeout(timer)
 	}, [isButtonDisabled])
 
 	useEffect(() => {
@@ -126,11 +124,7 @@ const AddUserDrawer: React.FC = () => {
 				>
 					<UiSelect placeholder='Выберите роль' options={roles} />
 				</Form.Item>
-				<UiButton
-					loading={isButtonDisabled}
-					type='primary'
-					htmlType='submit'
-				>
+				<UiButton loading={isButtonDisabled} type='primary' htmlType='submit'>
 					Подтвердить
 				</UiButton>
 			</Form>

@@ -1,33 +1,36 @@
 import { Form, message } from 'antd'
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import { UiButton, UiDrawer, UiInput } from 'src/components/ui'
 import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 
-type formType = {
+type TState = {
 	title: string
-	description: string
+	price: number | null
 }
 
-const AddCourseDrawer: React.FC = () => {
+const SourceInfoDrawer: React.FC = () => {
+	const { id } = useParams()
 	const [form] = Form.useForm()
-	const { setFetch, setCourseDrawer, setCourseToEdit } = useActions()
-	const { courseDrawer } = useSelectors()
+	const { setFetch, setSourceInfoDrawer } = useActions()
+	const { sourceInfoDrawer } = useSelectors()
 	const [isButtonDisabled, setButtonDisabled] = React.useState(false)
 
 	const onClose = () => {
-		setCourseToEdit(null)
-		setCourseDrawer(false)
+		setSourceInfoDrawer(false)
 	}
 
-	const onSubmit = (values: formType) => {
+	const onSubmit = (values: TState) => {
 		setButtonDisabled(true)
-		axiosInstance.post('/courses', values).then(() => {
-			setCourseDrawer(false)
-			message.success('Успешно')
-			form.resetFields()
-			setFetch(Math.random())
-		})
+		axiosInstance
+			.post(`/sources/${id}/links`, { ...values, type_id: 1 })
+			.then(() => {
+				setSourceInfoDrawer(false)
+				setFetch(Math.random())
+				form.resetFields()
+				message.success('Успешно')
+			})
 	}
 
 	React.useEffect(() => {
@@ -41,26 +44,21 @@ const AddCourseDrawer: React.FC = () => {
 	}, [isButtonDisabled])
 
 	return (
-		<UiDrawer
-			placement='right'
-			title='Новый курс'
-			onClose={onClose}
-			open={courseDrawer}
-		>
+		<UiDrawer placement='right' onClose={onClose} open={sourceInfoDrawer}>
 			<Form layout='vertical' form={form} onFinish={onSubmit}>
 				<Form.Item
 					name='title'
 					label='Название'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
-					<UiInput placeholder='Название...' />
+					<UiInput placeholder='Название' type='text' />
 				</Form.Item>
 				<Form.Item
-					name='description'
-					label='Описание'
+					name='price'
+					label='Цена'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
-					<UiInput placeholder='Описание...' />
+					<UiInput placeholder='Цена' type='text' />
 				</Form.Item>
 				<UiButton loading={isButtonDisabled} htmlType='submit'>
 					Добавить
@@ -70,4 +68,4 @@ const AddCourseDrawer: React.FC = () => {
 	)
 }
 
-export { AddCourseDrawer }
+export { SourceInfoDrawer }

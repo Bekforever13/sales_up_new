@@ -19,6 +19,7 @@ export interface ISourceInitState {
 	sourceToEdit: TSource | null
 	sourceDrawer: boolean
 	sourceInfoEdit: TLinkEditForm | null
+	sourceInfoDrawer: boolean
 }
 
 export type TLinkEditForm = {
