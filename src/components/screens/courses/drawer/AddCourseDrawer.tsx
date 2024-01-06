@@ -1,36 +1,31 @@
-import { message } from 'antd'
-import React, { useState } from 'react'
+import { Form, message } from 'antd'
+import React from 'react'
 import { UiButton, UiDrawer, UiInput } from 'src/components/ui'
 import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 
+type formType = {
+	title: string
+	description: string
+}
+
 const AddCourseDrawer: React.FC = () => {
+	const [form] = Form.useForm()
 	const { setFetch, setCourseDrawer, setCourseToEdit } = useActions()
 	const { courseDrawer } = useSelectors()
 	const [isButtonDisabled, setButtonDisabled] = React.useState(false)
-	const [newCourse, setNewСourse] = useState({
-		title: '',
-		description: '',
-	})
 
 	const onClose = () => {
 		setCourseToEdit(null)
 		setCourseDrawer(false)
-		setNewСourse({
-			title: '',
-			description: '',
-		})
 	}
 
-	const onSubmit = () => {
+	const onSubmit = (values: formType) => {
 		setButtonDisabled(true)
-		axiosInstance.post('/courses', newCourse).then(() => {
+		axiosInstance.post('/courses', values).then(() => {
 			setCourseDrawer(false)
 			message.success('Успешно')
-			setNewСourse({
-				title: '',
-				description: '',
-			})
+			form.resetFields()
 			setFetch(Math.random())
 		})
 	}
@@ -54,25 +49,25 @@ const AddCourseDrawer: React.FC = () => {
 			onClose={onClose}
 			open={courseDrawer}
 		>
-			<UiInput
-				className='w-full border-[1px] border-black py-2 px-4 rounded-md mb-5'
-				placeholder='Название...'
-				type='text'
-				value={newCourse.title}
-				onChange={e => setNewСourse({ ...newCourse, title: e.target.value })}
-			/>
-			<UiInput
-				className='w-full border-[1px] border-black py-2 px-4 rounded-md mb-5'
-				placeholder='Описание...'
-				type='text'
-				value={newCourse.description}
-				onChange={e =>
-					setNewСourse({ ...newCourse, description: e.target.value })
-				}
-			/>
-			<UiButton loading={isButtonDisabled} onClick={onSubmit}>
-				Добавить
-			</UiButton>
+			<Form layout='vertical' form={form} onFinish={onSubmit}>
+				<Form.Item
+					name='title'
+					label='Название'
+					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
+				>
+					<UiInput placeholder='Название...' />
+				</Form.Item>
+				<Form.Item
+					name='description'
+					label='Описание'
+					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
+				>
+					<UiInput placeholder='Описание...' />
+				</Form.Item>
+				<UiButton loading={isButtonDisabled} htmlType='submit'>
+					Добавить
+				</UiButton>
+			</Form>
 		</UiDrawer>
 	)
 }

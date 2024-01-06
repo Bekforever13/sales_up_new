@@ -1,3 +1,5 @@
+export type TCoordinates = { lat: number; lng: number }
+
 export type TBot = {
 	company_id: number
 	created_at: string
@@ -35,4 +37,5 @@ export interface ICompaniesInitState {
 	companiesEdit: TCompanyForm | null
 	companies: ICompany[]
 	companiesTotal: number
+	companiesCoordinates: TCoordinates
 }

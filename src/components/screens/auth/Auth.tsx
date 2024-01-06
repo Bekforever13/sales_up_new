@@ -1,7 +1,7 @@
 import { MaskedInput } from 'antd-mask-input'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { formatPhone } from 'src/utils/shared'
+import { clearSpaces } from 'src/utils/shared'
 import { ILoginDataBody } from './Auth.types'
 import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from 'src/services/axiosInstance'
@@ -28,7 +28,7 @@ const Auth: React.FC = () => {
 		axiosInstance
 			.post('/auth/login', {
 				...values,
-				phone: formatPhone('+' + values.phone),
+				phone: clearSpaces('+' + values.phone),
 			})
 			.then(res => {
 				if (res.status === 200) {

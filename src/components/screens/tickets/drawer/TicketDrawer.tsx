@@ -83,7 +83,7 @@ const TicketDrawer: React.FC = () => {
 					rules={[
 						{
 							required: true,
-							max: 16000000,
+							max: 100000000,
 							message: 'Пожалуйста, заполните поле.',
 						},
 					]}

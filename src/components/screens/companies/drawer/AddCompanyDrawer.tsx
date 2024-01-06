@@ -1,30 +1,29 @@
-import { message } from 'antd'
-import React, { useState } from 'react'
+import { Form, message } from 'antd'
+import React from 'react'
 import { UiButton, UiDrawer, UiInput } from 'src/components/ui'
 import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 
+type formType = {
+	title: string
+	description: string
+}
+
 const AddCompanyDrawer: React.FC = () => {
+	const [form] = Form.useForm()
 	const { setFetch, setCompaniesDrawer } = useActions()
 	const { companiesDrawer } = useSelectors()
 	const [isButtonDisabled, setButtonDisabled] = React.useState(false)
-	const [newCompany, setNewCompany] = useState({
-		title: '',
-		description: '',
-	})
 
 	const onClose = () => setCompaniesDrawer(false)
 
-	const onSubmit = () => {
+	const onFinish = (values: formType) => {
 		setButtonDisabled(true)
-		axiosInstance.post('/companies', newCompany).then(() => {
+		axiosInstance.post('/companies', values).then(() => {
 			setCompaniesDrawer(false)
 			message.success('Успешно')
-			setNewCompany({
-				title: '',
-				description: '',
-			})
 			setFetch(Math.random())
+			form.resetFields()
 		})
 	}
 
@@ -35,9 +34,7 @@ const AddCompanyDrawer: React.FC = () => {
 				setButtonDisabled(false)
 			}, 2000)
 		}
-		return () => {
-			clearTimeout(timer)
-		}
+		return () => clearTimeout(timer)
 	}, [isButtonDisabled])
 
 	return (
@@ -47,25 +44,32 @@ const AddCompanyDrawer: React.FC = () => {
 			onClose={onClose}
 			open={companiesDrawer}
 		>
-			<UiInput
-				className='w-full border-[1px] border-black py-2 px-4 rounded-md mb-5'
-				placeholder='Название...'
-				type='text'
-				value={newCompany.title}
-				onChange={e => setNewCompany({ ...newCompany, title: e.target.value })}
-			/>
-			<UiInput
-				className='w-full border-[1px] border-black py-2 px-4 rounded-md mb-5'
-				placeholder='Описание...'
-				type='text'
-				value={newCompany.description}
-				onChange={e =>
-					setNewCompany({ ...newCompany, description: e.target.value })
-				}
-			/>
-			<UiButton loading={isButtonDisabled} onClick={onSubmit}>
-				Добавить
-			</UiButton>
+			<Form
+				form={form}
+				onFinish={onFinish}
+				name='basic'
+				initialValues={{ remember: true }}
+				autoComplete='off'
+				layout='vertical'
+			>
+				<Form.Item
+					name='title'
+					label='Название'
+					rules={[{ required: true, message: 'Пожалуйста, заполните поле' }]}
+				>
+					<UiInput placeholder='Название...' />
+				</Form.Item>
+				<Form.Item
+					name='description'
+					label='Название'
+					rules={[{ required: true, message: 'Пожалуйста, заполните поле' }]}
+				>
+					<UiInput placeholder='Описание...' />
+				</Form.Item>
+				<UiButton htmlType='submit' loading={isButtonDisabled}>
+					Добавить
+				</UiButton>
+			</Form>
 		</UiDrawer>
 	)
 }

@@ -17,6 +17,7 @@ const Delete: React.FC<Props> = ({ route, id }) => {
 			setFetch(Math.random())
 		})
 	}
+	
 	return (
 		<UiPopconfirm
 			title='Вы действительно хотите удалить?'

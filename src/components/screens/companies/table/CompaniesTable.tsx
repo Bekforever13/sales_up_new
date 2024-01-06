@@ -9,6 +9,7 @@ import { Delete } from 'src/components/shared'
 import { useActions } from 'src/hooks'
 import { useNavigate } from 'react-router-dom'
 import { FaEdit } from 'react-icons/fa'
+import { formatPhone } from 'src/utils/shared'
 
 const CompaniesTable: React.FC<TCompaniesProps> = ({ page, setPage }) => {
 	const navigate = useNavigate()
@@ -33,6 +34,8 @@ const CompaniesTable: React.FC<TCompaniesProps> = ({ page, setPage }) => {
 		{
 			title: 'Телефон',
 			dataIndex: 'phone',
+			width: 150,
+			render: (_, rec) => formatPhone(rec.phone ?? ''),
 		},
 		{
 			title: 'Телеграм бот',
@@ -56,11 +59,11 @@ const CompaniesTable: React.FC<TCompaniesProps> = ({ page, setPage }) => {
 								title: rec.title,
 								description: rec.description,
 								telegram_channel: rec.telegram_channel,
-								phone: rec.phone,
+								phone: rec.phone.slice(3),
 								lat: rec.lat,
 								lng: rec.lng,
 							})
-							navigate(`/companies/${rec.id}`)
+							navigate(`/companies/${rec.title.replace(/ /g, '_')}`)
 						}}
 					>
 						<FaEdit size='22' className='cursor-pointer' />

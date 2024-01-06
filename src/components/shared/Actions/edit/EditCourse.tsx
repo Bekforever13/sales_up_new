@@ -25,7 +25,6 @@ const EditCourse: React.FC = () => {
 	const content = () => (
 		<div className='w-[200px] flex flex-col gap-y-5'>
 			<UiInput
-				className='w-full border-[1px] border-black py-2 px-4 rounded-md'
 				placeholder='Название...'
 				value={newDataCourse.title}
 				onChange={e =>
@@ -34,7 +33,6 @@ const EditCourse: React.FC = () => {
 				type='text'
 			/>
 			<UiInput
-				className='w-full border-[1px] border-black py-2 px-4 rounded-md'
 				placeholder='Описание...'
 				value={newDataCourse.description}
 				onChange={e =>

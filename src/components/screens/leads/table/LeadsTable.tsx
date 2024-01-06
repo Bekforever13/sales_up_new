@@ -12,6 +12,7 @@ import { IoTicketOutline } from 'react-icons/io5'
 import { LeadTicketModal } from '../modal/LeadTicketModal'
 import { MdOutlineTextsms } from 'react-icons/md'
 import { TelegramChat } from '../chat/TelegramChat'
+import { formatPhone } from 'src/utils/shared'
 
 const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 	const [currentLead, setCurrentLead] = useState<TLeadsTable>()
@@ -43,6 +44,8 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 		{
 			title: 'Телефон',
 			dataIndex: 'phone',
+			width: 150,
+			render: (_, rec) => formatPhone(rec.phone ?? ''),
 		},
 		{
 			title: 'Билеты',
@@ -84,8 +87,8 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 					</UiButton>
 					<UiButton
 						onClick={() => {
-							setModal(true)
 							setCurrentLead(rec)
+							setModal(true)
 						}}
 					>
 						<IoTicketOutline size='22' />

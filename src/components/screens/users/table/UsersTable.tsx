@@ -4,23 +4,16 @@ import { TLeadsProps } from './UsersTable.types'
 import type { ColumnsType } from 'antd/es/table'
 import UiTable from 'src/components/ui/table/UiTable'
 import { BsPencilSquare } from 'react-icons/bs'
-import { IoTrashOutline } from 'react-icons/io5'
-import { UiButton, UiPopconfirm } from 'src/components/ui'
-import { axiosInstance } from 'src/services/axiosInstance'
+import { UiButton } from 'src/components/ui'
 import { useActions } from 'src/hooks'
 import { TUser } from 'src/store/users/Users.types'
+import { Delete } from 'src/components/shared'
 
 const UsersTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 	const { users, usersTotal } = useSelectors()
-	const { setFetch, setUserToEdit, setUserDrawer } = useActions()
+	const { setUserToEdit, setUserDrawer } = useActions()
 
 	const handleChangePage = (event: number) => setPage(event)
-
-	const handleDelete = (id: number) => {
-		axiosInstance
-			.delete(`/admin/users/${id}`)
-			.then(() => setFetch(Math.random()))
-	}
 
 	const handleEdit = (rec: TUser) => {
 		setUserToEdit({
@@ -58,14 +51,9 @@ const UsersTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 					<UiButton onClick={() => handleEdit(rec)}>
 						<BsPencilSquare size='22' className='cursor-pointer' />
 					</UiButton>
-					<UiPopconfirm
-						title='Вы действительно хотите удалить?'
-						onConfirm={() => handleDelete(rec.id)}
-					>
-						<UiButton>
-							<IoTrashOutline size='22' className='cursor-pointer' />
-						</UiButton>
-					</UiPopconfirm>
+					<UiButton>
+						<Delete route='admin/users' id={rec.id} />
+					</UiButton>
 				</div>
 			),
 		},

@@ -9,7 +9,7 @@ const UiInput: React.FC<InputProps> = (_props) => {
   const theme = useInputMode(mode);
   return (
     <ConfigProvider theme={{ token: theme }}>
-      <Input {..._props} />
+      <Input allowClear {..._props} />
     </ConfigProvider>
   );
 };

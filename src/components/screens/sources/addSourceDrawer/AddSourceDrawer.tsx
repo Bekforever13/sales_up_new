@@ -45,13 +45,16 @@ const AddSourceDrawer: React.FC = () => {
 	return (
 		<UiDrawer placement='right' onClose={onClose} open={sourceDrawer}>
 			<UiInput
-				className='w-full border-[1px] border-black py-2 px-4 rounded-md mb-5'
 				placeholder='Название...'
 				value={newSource.title}
 				onChange={e => setNewSource({ ...newSource, title: e.target.value })}
 				type='text'
 			/>
-			<UiButton loading={isButtonDisabled} onClick={onSubmit}>
+			<UiButton
+				style={{ marginTop: '20px' }}
+				loading={isButtonDisabled}
+				onClick={onSubmit}
+			>
 				Добавить
 			</UiButton>
 		</UiDrawer>

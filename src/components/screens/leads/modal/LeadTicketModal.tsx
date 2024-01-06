@@ -6,6 +6,7 @@ import { LeadTicketForm, LeadTicketProps } from './LeadTicketModalTypes'
 import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 import { TTicket } from 'src/store/tickets/Tickets.types'
+import { formatPrice } from 'src/utils/shared'
 
 const LeadTicketModal: React.FC<LeadTicketProps> = ({
 	lead,
@@ -13,12 +14,10 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 	setModal,
 }) => {
 	const { setTickets, setFetch } = useActions()
-	const { fetch, tickets } = useSelectors()
+	const { tickets } = useSelectors()
 	const [newData, setNewData] = useState<LeadTicketForm[]>([])
-
-	const handleCancel = () => {
-		setModal(false)
-	}
+	const [isLoading, setIsLoading] = useState(false)
+	const handleCancel = () => setModal(false)
 
 	const handleDecrement = (id: number) => {
 		// decrement quantity of ticket to -1
@@ -49,19 +48,21 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 	}
 
 	const handleSubmit = () => {
+		setIsLoading(true)
 		axiosInstance
 			.post(`/leads/${lead?.id}/tickets`, { tickets: newData })
 			.then(() => {
 				// close modal, change fetch to refetch all tables, clear state
-				setModal(false)
 				setFetch(Math.random())
+				setIsLoading(false)
+				setModal(false)
 				setNewData([])
 			})
 	}
 
 	useEffect(() => {
 		// if modal open we get tickets
-		if (modal) {
+		if (lead) {
 			axiosInstance.get('/tickets').then(res => {
 				setTickets(res.data.data)
 				res.data.data.map((ticket: TTicket) => {
@@ -70,18 +71,19 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 						{
 							id: ticket.id,
 							quantity:
-								// change quantity of ticket from our newData state. it will change to lead's quantity of this ticket
-								lead?.tickets?.find(el => el.id === ticket.id)?.quantity ?? 0,
+								lead?.tickets?.find(el => el.id === ticket.id)?.quantity || 0,
 						},
 					])
 				})
 			})
 		}
+	}, [lead])
+
+	useEffect(() => {
 		if (!modal) {
-			// if modal closed we clear state, if we don't clear it will be crashed
 			setNewData([])
 		}
-	}, [fetch, modal])
+	}, [modal, lead?.id])
 
 	return (
 		<Modal
@@ -91,41 +93,47 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 			footer={false}
 		>
 			{/* mapping all tickets */}
-			{tickets?.map(ticket => {
-				return (
-					<div
-						key={ticket.id}
-						className='flex items-center justify-between w-full my-5'
-					>
-						<div className='text-black dark:text-black'>{ticket.name}</div>
-						<div className='text-black dark:text-black'>
-							{ticket.price.toString().replace(/\d{3}(?=\d)/g, '$&\n')}
-						</div>
-						<div className='flex items-center gap-5'>
-							<UiButton
-								disabled={
-									newData.find(item => item.id === ticket.id)?.quantity === 0
-								}
-								onClick={() => handleDecrement(ticket.id)}
-								className='flex items-center'
-							>
-								<FaMinus size='18' />
-							</UiButton>
-							<div className='w-16 bg-blue-600 p-1 rounded-lg flex items-center justify-center select-none text-white dark:text-white'>
-								{/* this will display lead's quantity of ticket */}
-								{newData?.find(item => item.id === ticket.id)?.quantity}
+			<div className='max-h-[500px] overflow-y-auto pr-5'>
+				{tickets?.map(ticket => {
+					return (
+						<div
+							key={ticket.id}
+							className='flex items-center justify-between w-full my-5'
+						>
+							<div className='text-black dark:text-black'>{ticket.name}</div>
+							<div className='text-black dark:text-black'>
+								{formatPrice(ticket.price)}
 							</div>
-							<UiButton
-								onClick={() => handleIncrement(ticket.id)}
-								className='flex items-center'
-							>
-								<FaPlus size='18' />
-							</UiButton>
+							<div className='flex items-center gap-5'>
+								<UiButton
+									disabled={
+										newData.find(item => item.id === ticket.id)?.quantity === 0
+									}
+									onClick={() => handleDecrement(ticket.id)}
+									className='flex items-center'
+								>
+									<FaMinus size='18' />
+								</UiButton>
+								<div className='w-16 bg-blue-600 p-1 rounded-lg flex items-center justify-center select-none text-white dark:text-white'>
+									{/* this will display lead's quantity of ticket */}
+									{newData?.find(item => item.id === ticket.id)?.quantity ?? 0}
+								</div>
+								<UiButton
+									onClick={() => handleIncrement(ticket.id)}
+									className='flex items-center'
+								>
+									<FaPlus size='18' />
+								</UiButton>
+							</div>
 						</div>
-					</div>
-				)
-			})}
-			<UiButton onClick={handleSubmit}>Сохранить</UiButton>
+					)
+				})}
+			</div>
+			<div className='flex justify-end pr-10 pt-3'>
+				<UiButton loading={isLoading} onClick={handleSubmit}>
+					Сохранить
+				</UiButton>
+			</div>
 		</Modal>
 	)
 }

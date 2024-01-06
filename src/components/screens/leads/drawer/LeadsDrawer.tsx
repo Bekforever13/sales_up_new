@@ -83,21 +83,24 @@ const LeadsDrawer: React.FC = () => {
 			onClose={onClose}
 			open={leadsDrawer}
 		>
-			<Form form={form} onFinish={onFinish}>
+			<Form layout='vertical' form={form} onFinish={onFinish}>
 				<Form.Item
 					name='first_name'
+					label='Имя'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
 					<UiInput placeholder='Имя...' />
 				</Form.Item>
 				<Form.Item
 					name='last_name'
+					label='Фамилия'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
 					<UiInput placeholder='Фамилия...' />
 				</Form.Item>
 				<Form.Item
 					name='phone'
+					label='Телефон'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
 					<MaskedInput
@@ -110,15 +113,13 @@ const LeadsDrawer: React.FC = () => {
 					/>
 				</Form.Item>
 				{leadsToEdit && (
-					<Form.Item name='comment'>
+					<Form.Item label='Комментарий' name='comment'>
 						<UiInput placeholder='Комментарий' />
 					</Form.Item>
 				)}
-				<Form.Item>
-					<UiButton type='primary' loading={isButtonDisabled} htmlType='submit'>
-						Подтвердить
-					</UiButton>
-				</Form.Item>
+				<UiButton type='primary' loading={isButtonDisabled} htmlType='submit'>
+					Подтвердить
+				</UiButton>
 			</Form>
 		</UiDrawer>
 	)

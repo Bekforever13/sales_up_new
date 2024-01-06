@@ -24,13 +24,11 @@ const EditSource: React.FC = () => {
 	const content = () => (
 		<div className='w-[200px] flex flex-col gap-y-5'>
 			<UiInput
-				className='w-full border-[1px] border-black py-2 px-4 rounded-md'
 				placeholder='Название...'
 				value={newDataSource.title}
 				onChange={e =>
 					setNewDataSource({ ...newDataSource, title: e.target.value })
 				}
-				type='text'
 			/>
 			<UiButton onClick={onSubmit}>Сохранить</UiButton>
 		</div>

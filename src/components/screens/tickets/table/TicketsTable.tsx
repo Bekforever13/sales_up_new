@@ -4,21 +4,17 @@ import { TTicketsProps } from './TicketsTable.types'
 import type { ColumnsType } from 'antd/es/table'
 import UiTable from 'src/components/ui/table/UiTable'
 import { BsPencilSquare } from 'react-icons/bs'
-import { IoTrashOutline } from 'react-icons/io5'
-import { UiButton, UiPopconfirm } from 'src/components/ui'
-import { axiosInstance } from 'src/services/axiosInstance'
+import { UiButton } from 'src/components/ui'
 import { useActions } from 'src/hooks'
 import { TTicket } from 'src/store/tickets/Tickets.types'
+import { formatPrice } from 'src/utils/shared'
+import { Delete } from 'src/components/shared'
 
 const TicketsTable: React.FC<TTicketsProps> = ({ page, setPage }) => {
 	const { tickets, ticketsTotal } = useSelectors()
-	const { setFetch, setTicketToEdit, setTicketsDrawer } = useActions()
+	const { setTicketToEdit, setTicketsDrawer } = useActions()
 
 	const handleChangePage = (event: number) => setPage(event)
-
-	const handleDelete = (id: number) => {
-		axiosInstance.delete(`/tickets/${id}`).then(() => setFetch(Math.random()))
-	}
 
 	const handleEdit = (rec: TTicket) => {
 		setTicketToEdit({
@@ -37,7 +33,7 @@ const TicketsTable: React.FC<TTicketsProps> = ({ page, setPage }) => {
 		{
 			title: 'Цена',
 			dataIndex: 'price',
-			render: el => <>{el.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} сум</>,
+			render: el => <>{formatPrice(el.toString())} сум</>,
 		},
 		{
 			title: 'Действия',
@@ -47,14 +43,10 @@ const TicketsTable: React.FC<TTicketsProps> = ({ page, setPage }) => {
 					<UiButton onClick={() => handleEdit(rec)}>
 						<BsPencilSquare size='22' className='cursor-pointer' />
 					</UiButton>
-					<UiPopconfirm
-						title='Вы действительно хотите удалить?'
-						onConfirm={() => handleDelete(rec.id)}
-					>
-						<UiButton>
-							<IoTrashOutline size='22' className='cursor-pointer' />
-						</UiButton>
-					</UiPopconfirm>
+
+					<UiButton>
+						<Delete route='tickets' id={rec.id} />
+					</UiButton>
 				</div>
 			),
 		},
