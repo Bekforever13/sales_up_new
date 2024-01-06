@@ -5,6 +5,7 @@ const initialState: ISourceInitState = {
 	sources: [],
 	sourcesTotal: 10,
 	sourceToEdit: null,
+	sourceID: 0,
 	sourceDrawer: false,
 	sourceInfoEdit: null,
 	sourceInfoDrawer: false,
@@ -19,6 +20,9 @@ const SourcesSlice = createSlice({
 		},
 		setSourcesTotal(state, { payload }: PayloadAction<number>) {
 			state.sourcesTotal = payload
+		},
+		setSourceID(state, { payload }: PayloadAction<number>) {
+			state.sourceID = payload
 		},
 		setSourceToEdit(state, { payload }: PayloadAction<TSource | null>) {
 			state.sourceToEdit = payload

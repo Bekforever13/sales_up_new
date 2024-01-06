@@ -17,6 +17,7 @@ export interface ISourceInitState {
 	sources: TSource[]
 	sourcesTotal: number
 	sourceToEdit: TSource | null
+	sourceID: number
 	sourceDrawer: boolean
 	sourceInfoEdit: TLinkEditForm | null
 	sourceInfoDrawer: boolean

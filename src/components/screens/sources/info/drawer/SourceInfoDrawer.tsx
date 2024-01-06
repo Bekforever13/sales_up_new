@@ -1,6 +1,5 @@
 import { Form, message } from 'antd'
 import React from 'react'
-import { useParams } from 'react-router-dom'
 import { UiButton, UiDrawer, UiInput } from 'src/components/ui'
 import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
@@ -11,10 +10,9 @@ type TState = {
 }
 
 const SourceInfoDrawer: React.FC = () => {
-	const { id } = useParams()
 	const [form] = Form.useForm()
 	const { setFetch, setSourceInfoDrawer } = useActions()
-	const { sourceInfoDrawer } = useSelectors()
+	const { sourceInfoDrawer, sourceID } = useSelectors()
 	const [isButtonDisabled, setButtonDisabled] = React.useState(false)
 
 	const onClose = () => {
@@ -24,7 +22,7 @@ const SourceInfoDrawer: React.FC = () => {
 	const onSubmit = (values: TState) => {
 		setButtonDisabled(true)
 		axiosInstance
-			.post(`/sources/${id}/links`, { ...values, type_id: 1 })
+			.post(`/sources/${sourceID}/links`, { ...values, type_id: 1 })
 			.then(() => {
 				setSourceInfoDrawer(false)
 				setFetch(Math.random())

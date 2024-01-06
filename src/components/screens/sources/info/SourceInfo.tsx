@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 import { Delete, EditSourceInfo } from 'src/components/shared'
 import { UiButton } from 'src/components/ui'
 import { axiosInstance } from 'src/services/axiosInstance'
@@ -11,9 +10,8 @@ import { Spin } from 'antd'
 import { SourceInfoDrawer } from './drawer/SourceInfoDrawer'
 
 const SourceInfo: React.FC = () => {
-	const { id } = useParams()
 	const { setSourceInfoEdit, setSourceInfoDrawer } = useActions()
-	const { fetch } = useSelectors()
+	const { fetch, sourceID } = useSelectors()
 	const [total, setTotal] = useState(10)
 	const [page, setPage] = useState(1)
 	const [data, setData] = useState([])
@@ -74,13 +72,13 @@ const SourceInfo: React.FC = () => {
 	useEffect(() => {
 		setLoading(true)
 		axiosInstance
-			.get(`/sources/${id}/links`)
+			.get(`/sources/${sourceID}/links`)
 			.then(res => {
 				setTotal(res.data.total)
 				setData(res.data.data)
 			})
 			.finally(() => setLoading(false))
-	}, [id, fetch])
+	}, [sourceID, fetch])
 
 	return (
 		<Spin spinning={loading}>

@@ -16,8 +16,8 @@ type TCoursesProps = {
 
 const SourcesTable: React.FC<TCoursesProps> = ({ page, setPage }) => {
 	const { sources, sourcesTotal } = useSelectors()
+	const { setSourceToEdit, setSourceID } = useActions()
 	const navigate = useNavigate()
-	const { setSourceToEdit } = useActions()
 
 	const columns: ColumnsType<TSource> = [
 		{
@@ -33,7 +33,12 @@ const SourcesTable: React.FC<TCoursesProps> = ({ page, setPage }) => {
 					<UiButton onClick={() => setSourceToEdit(rec)}>
 						<EditSource />
 					</UiButton>
-					<UiButton onClick={() => navigate(`/sources/${rec.id}`)}>
+					<UiButton
+						onClick={() => {
+							navigate(`/sources/${rec.title.replace(/ /g, '_')}`)
+							setSourceID(rec.id)
+						}}
+					>
 						<MdOutlineContentPasteSearch size='22' />
 					</UiButton>
 					<UiButton>
