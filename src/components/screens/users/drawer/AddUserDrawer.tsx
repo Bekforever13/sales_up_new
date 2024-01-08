@@ -107,12 +107,14 @@ const AddUserDrawer: React.FC = () => {
 			>
 				<Form.Item
 					name='name'
+					label='Ф.И.О'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
 					<UiInput placeholder='Ф.И.О' />
 				</Form.Item>
 				<Form.Item
 					name='phone'
+					label='Телефон'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
 					<MaskedInput
@@ -126,6 +128,7 @@ const AddUserDrawer: React.FC = () => {
 				</Form.Item>
 				<Form.Item
 					name='password'
+					label='Пароль'
 					rules={[
 						userToEdit
 							? {}
@@ -136,6 +139,7 @@ const AddUserDrawer: React.FC = () => {
 				</Form.Item>
 				<Form.Item
 					name='role_id'
+					label='Роль'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
 					<UiSelect placeholder='Выберите роль' options={roles} />

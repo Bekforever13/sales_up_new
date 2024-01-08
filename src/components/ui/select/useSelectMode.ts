@@ -1,6 +1,6 @@
 export const useSelectMode = (mode: 'dark' | 'light') => {
 	const dark = {
-		colorText: '#94A3B8',
+		colorText: '#fff',
 		colorTextPlaceholder: '#94A3B8',
 		colorPrimaryBg: '#164863',
 		colorPrimaryHover: '#0766AD',

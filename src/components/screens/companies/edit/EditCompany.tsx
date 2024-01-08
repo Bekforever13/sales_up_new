@@ -72,25 +72,33 @@ const EditCompany: React.FC = () => {
 
 	return (
 		<div className='flex items-start gap-10 text-black dark:text-white bg-[#ececec] dark:bg-slate-600 p-5 rounded-xl'>
-			<Form form={form} onFinish={onEditSubmit}>
-				<Form.Item label='Название' name='title' rules={[{ required: true }]}>
+			<Form layout='vertical' form={form} onFinish={onEditSubmit}>
+				<Form.Item
+					label={<label className='text-black dark:text-white'>Название</label>}
+					name='title'
+					rules={[{ required: true }]}
+				>
 					<UiInput placeholder='Название' />
 				</Form.Item>
 				<Form.Item
-					label='Описание'
+					label={<label className='text-black dark:text-white'>Описание</label>}
 					name='description'
 					rules={[{ required: true }]}
 				>
 					<UiInput placeholder='Описание' />
 				</Form.Item>
 				<Form.Item
-					label='Канал'
+					label={<label className='text-black dark:text-white'>Канал</label>}
 					name='telegram_channel'
 					rules={[{ required: true }]}
 				>
 					<UiInput placeholder='Канал' />
 				</Form.Item>
-				<Form.Item label='Телефон' name='phone' rules={[{ required: true }]}>
+				<Form.Item
+					label={<label className='text-black dark:text-white'>Телефон</label>}
+					name='phone'
+					rules={[{ required: true }]}
+				>
 					<MaskedInput
 						ref={phoneInputRef}
 						style={

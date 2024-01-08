@@ -54,14 +54,14 @@ const AddCompanyDrawer: React.FC = () => {
 			>
 				<Form.Item
 					name='title'
-					label='Название'
+					label={<label className='text-black dark:text-white'>Название</label>}
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле' }]}
 				>
 					<UiInput placeholder='Название...' />
 				</Form.Item>
 				<Form.Item
 					name='description'
-					label='Название'
+					label={<label className='text-black dark:text-white'>Описание</label>}
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле' }]}
 				>
 					<UiInput placeholder='Описание...' />

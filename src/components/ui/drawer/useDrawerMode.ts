@@ -1,6 +1,6 @@
 export const useDrawerMode = (mode: 'dark' | 'light') => {
 	const dark = {
-		colorText: '#94A3B8',
+		colorText: '#fff',
 		colorTextPlaceholder: '#94A3B8',
 		colorPrimaryBg: '#164863',
 		colorPrimaryHover: '#0766AD',
@@ -9,6 +9,7 @@ export const useDrawerMode = (mode: 'dark' | 'light') => {
 		colorBgElevated: '#164863',
 		controlItemBgActive: '#1A253A',
 		controlItemBgHover: '#1A253A',
+		colorIcon: '#fff',
 	}
 	const light = {
 		colorText: '#6D5580',
