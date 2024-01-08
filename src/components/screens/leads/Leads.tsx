@@ -18,6 +18,12 @@ const Leads: React.FC = () => {
 	const { fetch } = useSelectors()
 
 	useEffect(() => {
+		if (debouncedSearch !== '') {
+			setPage(1)
+		}
+	}, [debouncedSearch])
+
+	useEffect(() => {
 		setLoading(true)
 		axiosInstance
 			.get(
