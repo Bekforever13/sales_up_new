@@ -199,8 +199,15 @@ const TelegramChat: FC = () => {
 						/>
 						<button
 							type='submit'
-							onClick={e => handleSend(e)}
+							onClick={e => {
+								if (value.trim() === '' && selectedFile === null) {
+									e.preventDefault()
+								} else {
+									handleSend(e)
+								}
+							}}
 							className='cursor-pointer flex bg-transparent border-none items-center mx-3'
+							disabled={value.trim() === '' && selectedFile === null}
 						>
 							<IoSend size='22' />
 						</button>
