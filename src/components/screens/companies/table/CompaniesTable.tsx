@@ -59,7 +59,7 @@ const CompaniesTable: React.FC<TCompaniesProps> = ({ page, setPage }) => {
 								title: rec.title,
 								description: rec.description,
 								telegram_channel: rec.telegram_channel,
-								phone: rec.phone.slice(3),
+								phone: rec.phone,
 								lat: rec.lat,
 								lng: rec.lng,
 							})

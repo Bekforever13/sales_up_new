@@ -8,6 +8,7 @@ import { UiButton } from 'src/components/ui'
 import { useActions } from 'src/hooks'
 import { TUser } from 'src/store/users/Users.types'
 import { Delete } from 'src/components/shared'
+import { formatPhone } from 'src/utils/shared'
 
 const UsersTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 	const { users, usersTotal } = useSelectors()
@@ -28,16 +29,18 @@ const UsersTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 
 	const columns: ColumnsType<TUser> = [
 		{
-			title: 'ФИО',
+			title: 'Ф.И.О',
 			dataIndex: 'name',
 		},
 		{
 			title: 'Телефон',
 			dataIndex: 'phone',
+			render: (_, rec) => formatPhone(rec.phone),
 		},
 		{
 			title: 'Роль',
 			dataIndex: 'role_name',
+			render: (_, rec) => (rec.role_name === 'user' ? 'Пользователь' : 'Админ'),
 		},
 		{
 			title: 'Компания',

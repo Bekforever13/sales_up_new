@@ -1,7 +1,13 @@
 import { Form, message } from 'antd'
 import { MaskedInput } from 'antd-mask-input'
 import React, { useEffect } from 'react'
-import { UiButton, UiDrawer, UiInput, UiSelect } from 'src/components/ui'
+import {
+	UiButton,
+	UiDrawer,
+	UiInput,
+	UiInputPassword,
+	UiSelect,
+} from 'src/components/ui'
 import { useActions, useSelectors } from 'src/hooks'
 import { axiosInstance } from 'src/services/axiosInstance'
 import { TUserDrawerForm } from 'src/store/users/Users.types'
@@ -36,10 +42,18 @@ const AddUserDrawer: React.FC = () => {
 					})
 					.then(() => {
 						setUserDrawer(false)
+						setUserToEdit(null)
 						message.success('Успешно')
 						form.resetFields()
 						setFetch(Math.random())
 					})
+					.catch(e =>
+						message.error(
+							e.response.data.message === 'The phone field format is invalid.'
+								? 'Некорректно введён номер телефона'
+								: 'Произошла ошибка, повторите попытку'
+						)
+					)
 			: axiosInstance
 					.post('/admin/users', {
 						...values,
@@ -47,10 +61,12 @@ const AddUserDrawer: React.FC = () => {
 					})
 					.then(() => {
 						setUserDrawer(false)
+						setUserToEdit(null)
 						form.resetFields()
 						setFetch(Math.random())
 						message.success('Успешно')
 					})
+					.catch(() => message.error('Произошла ошибка, повторите попытку'))
 	}
 
 	React.useEffect(() => {
@@ -64,7 +80,7 @@ const AddUserDrawer: React.FC = () => {
 	}, [isButtonDisabled])
 
 	useEffect(() => {
-		if (userToEdit) {
+		if (userToEdit !== null) {
 			form.setFieldsValue({
 				name: userToEdit.name,
 				phone: userToEdit.phone,
@@ -116,7 +132,7 @@ const AddUserDrawer: React.FC = () => {
 							: { required: true, min: 6, message: 'Минимум 6 символов' },
 					]}
 				>
-					<UiInput placeholder='Пароль' />
+					<UiInputPassword placeholder='Пароль' />
 				</Form.Item>
 				<Form.Item
 					name='role_id'
