@@ -77,7 +77,7 @@ const LeadsDrawer: React.FC = () => {
 	return (
 		<UiDrawer
 			placement='right'
-			title='Новый Лид'
+			title={leadsToEdit ? 'Редактирование лида' : 'Новый Лид'}
 			onClose={onClose}
 			open={leadsDrawer}
 		>

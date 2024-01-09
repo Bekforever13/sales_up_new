@@ -42,7 +42,12 @@ const SourceInfoDrawer: React.FC = () => {
 	}, [isButtonDisabled])
 
 	return (
-		<UiDrawer placement='right' onClose={onClose} open={sourceInfoDrawer}>
+		<UiDrawer
+			title='Новый бот'
+			placement='right'
+			onClose={onClose}
+			open={sourceInfoDrawer}
+		>
 			<Form layout='vertical' form={form} onFinish={onSubmit}>
 				<Form.Item
 					name='title'
@@ -56,7 +61,7 @@ const SourceInfoDrawer: React.FC = () => {
 					label='Цена'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
-					<UiInput placeholder='Цена' type='text' />
+					<UiInput placeholder='Цена' type='number' />
 				</Form.Item>
 				<UiButton loading={isButtonDisabled} htmlType='submit'>
 					Добавить

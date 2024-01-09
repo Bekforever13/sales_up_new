@@ -8,14 +8,19 @@ import { TLink } from 'src/store/sources/Sources.types'
 import { useActions, useSelectors } from 'src/hooks'
 import { Spin } from 'antd'
 import { SourceInfoDrawer } from './drawer/SourceInfoDrawer'
+import { IoMdArrowBack } from 'react-icons/io'
+import { useNavigate } from 'react-router-dom'
 
 const SourceInfo: React.FC = () => {
+	const navigate = useNavigate()
 	const { setSourceInfoEdit, setSourceInfoDrawer } = useActions()
 	const { fetch, sourceID } = useSelectors()
 	const [total, setTotal] = useState(10)
 	const [page, setPage] = useState(1)
 	const [data, setData] = useState([])
 	const [loading, setLoading] = useState(false)
+
+	const handleBackBtn = () => navigate('/sources')
 
 	const columns: ColumnsType<TLink> = [
 		{
@@ -70,6 +75,12 @@ const SourceInfo: React.FC = () => {
 	]
 
 	useEffect(() => {
+		if (!sourceID) {
+			navigate('/sources')
+		}
+	}, [sourceID])
+
+	useEffect(() => {
 		setLoading(true)
 		axiosInstance
 			.get(`/sources/${sourceID}/links`)
@@ -83,7 +94,11 @@ const SourceInfo: React.FC = () => {
 	return (
 		<Spin spinning={loading}>
 			<div className='text-black dark:text-white bg-[#ececec] dark:bg-slate-600 p-5 rounded-xl flex flex-col gap-y-5'>
-				<div className='flex justify-end'>
+				<div className='flex justify-between'>
+					<UiButton className='flex items-center gap-2' onClick={handleBackBtn}>
+						<IoMdArrowBack size='22' />
+						Назад
+					</UiButton>
 					<UiButton onClick={() => setSourceInfoDrawer(true)}>
 						Добавить
 					</UiButton>

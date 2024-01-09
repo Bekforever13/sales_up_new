@@ -13,6 +13,7 @@ const UiPopconfirm: React.FC<PopconfirmProps> = _props => {
 				cancelButtonProps={{
 					style: { background: 'transparent' },
 				}}
+				cancelText='Отмена'
 				{..._props}
 			/>
 		</ConfigProvider>

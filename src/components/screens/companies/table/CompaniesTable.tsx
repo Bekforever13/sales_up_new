@@ -26,6 +26,9 @@ const CompaniesTable: React.FC<TCompaniesProps> = ({ page, setPage }) => {
 		{
 			title: 'Описание',
 			dataIndex: 'description',
+			render: (_, rec) => (
+				<p className='truncate w-[400px]'>{rec.description}</p>
+			),
 		},
 		{
 			title: 'Телеграм канал',

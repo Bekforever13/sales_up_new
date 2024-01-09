@@ -56,7 +56,7 @@ const TicketDrawer: React.FC = () => {
 	return (
 		<UiDrawer
 			placement='right'
-			title='Пользователь'
+			title={ticketsToEdit ? 'Редактирование билета' : 'Новый билет'}
 			onClose={onClose}
 			open={ticketsDrawer}
 		>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Popover } from 'antd'
 import { FaEdit } from 'react-icons/fa'
 import { axiosInstance } from 'src/services/axiosInstance'
-import { UiButton, UiInput } from 'src/components/ui'
+import { UiButton, UiInput, UiPopover } from 'src/components/ui'
 import { useActions, useSelectors } from 'src/hooks'
 
 const EditCourse: React.FC = () => {
@@ -24,22 +23,28 @@ const EditCourse: React.FC = () => {
 
 	const content = () => (
 		<div className='w-[200px] flex flex-col gap-y-5'>
-			<UiInput
-				placeholder='Название...'
-				value={newDataCourse.title}
-				onChange={e =>
-					setNewDataСourse({ ...newDataCourse, title: e.target.value })
-				}
-				type='text'
-			/>
-			<UiInput
-				placeholder='Описание...'
-				value={newDataCourse.description}
-				onChange={e =>
-					setNewDataСourse({ ...newDataCourse, description: e.target.value })
-				}
-				type='text'
-			/>
+			<label className='flex flex-col gap-y-2'>
+				Название курса
+				<UiInput
+					placeholder='Название'
+					value={newDataCourse.title}
+					onChange={e =>
+						setNewDataСourse({ ...newDataCourse, title: e.target.value })
+					}
+					type='text'
+				/>
+			</label>
+			<label className='flex flex-col gap-y-2'>
+				Описание курса
+				<UiInput
+					placeholder='Описание'
+					value={newDataCourse.description}
+					onChange={e =>
+						setNewDataСourse({ ...newDataCourse, description: e.target.value })
+					}
+					type='text'
+				/>
+			</label>
 			<UiButton onClick={onEditSubmit}>Сохранить</UiButton>
 		</div>
 	)
@@ -54,14 +59,14 @@ const EditCourse: React.FC = () => {
 	}, [courseToEdit])
 
 	return (
-		<Popover
+		<UiPopover
 			content={content}
 			trigger='click'
 			open={open}
 			onOpenChange={e => setOpen(e)}
 		>
 			<FaEdit size='22' className='cursor-pointer' />
-		</Popover>
+		</UiPopover>
 	)
 }
 

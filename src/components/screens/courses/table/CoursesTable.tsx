@@ -23,6 +23,9 @@ const CoursesTable: React.FC<TCoursesProps> = ({ page, setPage }) => {
 		{
 			title: 'Описание',
 			dataIndex: 'description',
+			render: (_, rec) => (
+				<p className='truncate w-[400px]'>{rec.description}</p>
+			),
 		},
 		{
 			title: 'Кликнул',

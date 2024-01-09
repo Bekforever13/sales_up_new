@@ -41,7 +41,12 @@ const AddSourceDrawer: React.FC = () => {
 	}, [isButtonDisabled])
 
 	return (
-		<UiDrawer placement='right' onClose={onClose} open={sourceDrawer}>
+		<UiDrawer
+			title='Новый источник'
+			placement='right'
+			onClose={onClose}
+			open={sourceDrawer}
+		>
 			<UiInput
 				placeholder='Название...'
 				value={newSource.title}

@@ -40,7 +40,7 @@ const AddCompanyDrawer: React.FC = () => {
 	return (
 		<UiDrawer
 			placement='right'
-			title='Новый филиал'
+			title='Новая компания'
 			onClose={onClose}
 			open={companiesDrawer}
 		>

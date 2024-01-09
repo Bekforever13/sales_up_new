@@ -50,17 +50,17 @@ const AddCourseDrawer: React.FC = () => {
 			<Form layout='vertical' form={form} onFinish={onSubmit}>
 				<Form.Item
 					name='title'
-					label='Название'
+					label='Название курса'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
-					<UiInput placeholder='Название...' />
+					<UiInput placeholder='Название курса' />
 				</Form.Item>
 				<Form.Item
 					name='description'
 					label='Описание'
 					rules={[{ required: true, message: 'Пожалуйста, заполните поле.' }]}
 				>
-					<UiInput placeholder='Описание...' />
+					<UiInput placeholder='Описание' />
 				</Form.Item>
 				<UiButton loading={isButtonDisabled} htmlType='submit'>
 					Добавить

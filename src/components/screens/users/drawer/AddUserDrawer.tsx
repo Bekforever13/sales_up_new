@@ -93,7 +93,7 @@ const AddUserDrawer: React.FC = () => {
 	return (
 		<UiDrawer
 			placement='right'
-			title='Пользователь'
+			title={userToEdit ? 'Редактирование пользователя' : 'Новый пользователь'}
 			onClose={onClose}
 			open={userDrawer}
 		>

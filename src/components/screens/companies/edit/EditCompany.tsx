@@ -3,9 +3,10 @@ import { Form, Button, message } from 'antd'
 import { axiosInstance } from 'src/services/axiosInstance'
 import { useActions, useSelectors } from 'src/hooks'
 import { MaskedInput } from 'antd-mask-input'
-import { UiInput } from 'src/components/ui'
+import { UiButton, UiInput, UiInputTextArea } from 'src/components/ui'
 import { useNavigate } from 'react-router-dom'
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps'
+import { IoMdArrowBack } from 'react-icons/io'
 
 const EditCompany: React.FC = () => {
 	const [form] = Form.useForm()
@@ -17,6 +18,8 @@ const EditCompany: React.FC = () => {
 	const theme = localStorage.getItem('theme')
 	const [lat, setLat] = useState(companiesEdit?.lat || 42.43626)
 	const [lng, setLng] = useState(companiesEdit?.lng || 59.651899)
+
+	const handleBackBtn = () => navigate('/companies')
 
 	const onMarkerDragEnd = (e: any) => {
 		const newCoords = e.get('target').geometry.getCoordinates()
@@ -72,63 +75,80 @@ const EditCompany: React.FC = () => {
 
 	return (
 		<div className='flex items-start gap-10 text-black dark:text-white bg-[#ececec] dark:bg-slate-600 p-5 rounded-xl'>
-			<Form layout='vertical' form={form} onFinish={onEditSubmit}>
-				<Form.Item
-					label={<label className='text-black dark:text-white'>Название</label>}
-					name='title'
-					rules={[{ required: true }]}
+			<UiButton className='flex items-center gap-2' onClick={handleBackBtn}>
+				<IoMdArrowBack size='22' />
+				Назад
+			</UiButton>
+			<div className='flex items-start gap-10'>
+				<Form
+					layout='vertical'
+					form={form}
+					className='w-[500px]'
+					onFinish={onEditSubmit}
 				>
-					<UiInput placeholder='Название' />
-				</Form.Item>
-				<Form.Item
-					label={<label className='text-black dark:text-white'>Описание</label>}
-					name='description'
-					rules={[{ required: true }]}
-				>
-					<UiInput placeholder='Описание' />
-				</Form.Item>
-				<Form.Item
-					label={<label className='text-black dark:text-white'>Канал</label>}
-					name='telegram_channel'
-					rules={[{ required: true }]}
-				>
-					<UiInput placeholder='Канал' />
-				</Form.Item>
-				<Form.Item
-					label={<label className='text-black dark:text-white'>Телефон</label>}
-					name='phone'
-					rules={[{ required: true }]}
-				>
-					<MaskedInput
-						ref={phoneInputRef}
-						style={
-							theme === 'dark'
-								? { color: 'white', background: '#164863' }
-								: { color: '#000', background: '#F1F5F9' }
+					<Form.Item
+						label={
+							<label className='text-black dark:text-white'>Название</label>
 						}
-						mask={'+{998}00 000 00 00'}
-					/>
-				</Form.Item>
-				<Form.Item>
-					<Button type='primary' htmlType='submit'>
-						Сохранить
-					</Button>
-				</Form.Item>
-			</Form>
-			<div>
-				<YMaps query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}>
-					<Map
-						style={{ width: '500px', height: '500px' }}
-						defaultState={{ center: [lat, lng], zoom: 13 }}
+						name='title'
+						rules={[{ required: true }]}
 					>
-						<Placemark
-							options={{ draggable: true }}
-							instanceRef={markerRef}
-							geometry={[lat, lng]}
-							onDragEnd={onMarkerDragEnd}
+						<UiInput placeholder='Название' />
+					</Form.Item>
+					<Form.Item
+						label={
+							<label className='text-black dark:text-white'>Описание</label>
+						}
+						name='description'
+						rules={[{ required: true }]}
+					>
+						<UiInputTextArea autoSize placeholder='Описание' />
+					</Form.Item>
+					<Form.Item
+						label={<label className='text-black dark:text-white'>Канал</label>}
+						name='telegram_channel'
+						rules={[{ required: true }]}
+					>
+						<UiInput placeholder='Канал' />
+					</Form.Item>
+					<Form.Item
+						label={
+							<label className='text-black dark:text-white'>Телефон</label>
+						}
+						name='phone'
+						rules={[{ required: true }]}
+					>
+						<MaskedInput
+							ref={phoneInputRef}
+							style={
+								theme === 'dark'
+									? { color: 'white', background: '#164863' }
+									: { color: '#000', background: '#F1F5F9' }
+							}
+							mask={'+{998}00 000 00 00'}
 						/>
-					</Map>
-				</YMaps>
+					</Form.Item>
+					<Form.Item>
+						<Button type='primary' htmlType='submit'>
+							Сохранить
+						</Button>
+					</Form.Item>
+				</Form>
+				<div>
+					<YMaps query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}>
+						<Map
+							style={{ width: '500px', height: '500px' }}
+							defaultState={{ center: [lat, lng], zoom: 13 }}
+						>
+							<Placemark
+								options={{ draggable: true }}
+								instanceRef={markerRef}
+								geometry={[lat, lng]}
+								onDragEnd={onMarkerDragEnd}
+							/>
+						</Map>
+					</YMaps>
+				</div>
 			</div>
 		</div>
 	)
