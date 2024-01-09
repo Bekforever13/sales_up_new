@@ -10,6 +10,7 @@ import { Spin } from 'antd'
 import { SourceInfoDrawer } from './drawer/SourceInfoDrawer'
 import { IoMdArrowBack } from 'react-icons/io'
 import { useNavigate } from 'react-router-dom'
+import { formatPrice } from 'src/utils/shared'
 
 const SourceInfo: React.FC = () => {
 	const navigate = useNavigate()
@@ -30,6 +31,7 @@ const SourceInfo: React.FC = () => {
 		{
 			title: 'Цена',
 			dataIndex: 'price',
+			render: (_, rec) => formatPrice(rec.price.toString()),
 		},
 		{
 			title: 'QR Code',
