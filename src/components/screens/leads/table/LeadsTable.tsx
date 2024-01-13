@@ -53,7 +53,7 @@ const LeadsTable: React.FC<TLeadsProps> = ({ page, setPage }) => {
 			render: (_, rec) => (
 				<ul>
 					{rec.tickets.map(el => (
-						<li className='flex items-center gap-5' key={el.id}>
+						<li className='flex items-center justify-between gap-5' key={el.id}>
 							{el.name}:<span>{el.quantity} шт</span>
 						</li>
 					))}

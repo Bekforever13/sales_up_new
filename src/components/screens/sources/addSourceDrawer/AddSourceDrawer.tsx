@@ -8,6 +8,7 @@ const AddSourceDrawer: React.FC = () => {
 	const { setFetch, setSourceDrawer, setSourceToEdit } = useActions()
 	const { sourceDrawer } = useSelectors()
 	const [isButtonDisabled, setButtonDisabled] = React.useState(false)
+	const [isLoading, setIsLoading] = React.useState(false)
 	const [newSource, setNewSource] = useState({
 		title: '',
 	})
@@ -19,26 +20,38 @@ const AddSourceDrawer: React.FC = () => {
 	}
 
 	const onSubmit = () => {
-		setButtonDisabled(true)
-		axiosInstance.post('/sources', newSource).finally(() => {
-			setSourceDrawer(false)
-			setFetch(Math.random())
-			message.success('Успешно')
-			setNewSource({
-				title: '',
+		setIsLoading(true)
+		axiosInstance
+			.post('/sources', newSource)
+			.then(() => {
+				setSourceDrawer(false)
+				setFetch(Math.random())
+				message.success('Успешно')
+				setNewSource({
+					title: '',
+				})
 			})
-		})
+			.catch(() => message.error('Повторите попытку'))
 	}
 
 	React.useEffect(() => {
+		if (!newSource.title) {
+			setButtonDisabled(true)
+		}
+		if (newSource.title) {
+			setButtonDisabled(false)
+		}
+	}, [newSource.title])
+
+	React.useEffect(() => {
 		let timer: ReturnType<typeof setTimeout>
-		if (isButtonDisabled) {
+		if (isLoading) {
 			timer = setTimeout(() => {
-				setButtonDisabled(false)
+				setIsLoading(false)
 			}, 2000)
 		}
 		return () => clearTimeout(timer)
-	}, [isButtonDisabled])
+	}, [isLoading])
 
 	return (
 		<UiDrawer
@@ -55,7 +68,8 @@ const AddSourceDrawer: React.FC = () => {
 			/>
 			<UiButton
 				style={{ marginTop: '20px' }}
-				loading={isButtonDisabled}
+				disabled={isButtonDisabled}
+				loading={isLoading}
 				onClick={onSubmit}
 			>
 				Добавить

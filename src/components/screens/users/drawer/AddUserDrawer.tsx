@@ -66,7 +66,13 @@ const AddUserDrawer: React.FC = () => {
 						setFetch(Math.random())
 						message.success('Успешно')
 					})
-					.catch(() => message.error('Произошла ошибка, повторите попытку'))
+					.catch(e =>
+						message.error(
+							e.response.data.message === 'The phone has already been taken.'
+								? 'Данный номер телефона уже зарегистрирован'
+								: 'Произошла ошибка, повторите попытку'
+						)
+					)
 	}
 
 	React.useEffect(() => {

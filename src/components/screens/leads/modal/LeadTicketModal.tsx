@@ -98,13 +98,16 @@ const LeadTicketModal: React.FC<LeadTicketProps> = ({
 					return (
 						<div
 							key={ticket.id}
-							className='flex items-center justify-between w-full my-5'
+							className='flex items-center w-full my-5'
 						>
+							{/* name of ticket */}
 							<div className='text-black dark:text-black'>{ticket.name}</div>
-							<div className='text-black dark:text-black'>
+							{/* price of ticket */}
+							<div className='text-black dark:text-black ml-auto mr-5'>
 								{formatPrice(ticket.price)}
 							</div>
-							<div className='flex items-center gap-5'>
+							{/* tickets actions */}
+							<div className='flex items-center gap-5 '>
 								<UiButton
 									disabled={
 										newData.find(item => item.id === ticket.id)?.quantity === 0
