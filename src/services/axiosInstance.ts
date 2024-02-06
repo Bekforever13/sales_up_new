@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const axiosInstance = axios.create({
-	baseURL: 'https://sales-up.uz/api',
+	baseURL: 'https://sales-up.karsoft.uz',
 })
 
 axiosInstance.interceptors.request.use(config => {
